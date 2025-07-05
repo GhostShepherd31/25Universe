@@ -110,7 +110,6 @@
         </ul>
       </div>
 
-      <!-- Real-time Compass -->
       <div class="tool">
         <h2>🧭 Real-Time Compass</h2>
         <p>Hold your device flat and rotate it to see your heading update in real-time.</p>
@@ -118,6 +117,7 @@
           <div id="compass-needle">↑</div>
           <div id="compass-reading">Heading: --°</div>
         </div>
+        <button onclick="initCompass()">Start Compass</button>
       </div>
     </section>
 
@@ -150,13 +150,8 @@
         <h2>📦 NSN Lookup – Commo Equipment</h2>
         <p>Below is a list of common communications equipment and their NSNs:</p>
 
-        <!-- 🔍 Search Box -->
         <input type="text" id="nsnSearch" placeholder="Search NSN or Item..." oninput="filterNSNs()" />
-
-        <!-- 📤 Export Button -->
         <button onclick="downloadCSV()">Export CSV</button>
-
-        <!-- 🔽 Results -->
         <div id="nsnList" class="nsn-list"></div>
       </div>
     </section>
