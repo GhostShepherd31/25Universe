@@ -56,7 +56,7 @@ Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
   `;
 }
 
-// Load and display NSNs
+// NSN List Loader
 function loadNSNs() {
   fetch('nsn-data.json')
     .then(res => res.json())
@@ -129,18 +129,11 @@ function downloadCSV() {
   a.download = 'nsn-export.csv';
   a.click();
 }
+
 // Real-Time Compass
 function initCompass() {
   const needle = document.getElementById('compass-needle');
   const reading = document.getElementById('compass-reading');
-
-  if (!window.DeviceOrientationEvent) {
-    reading.textContent = "Compass not supported on this device.";
-    return;
-  }
-
-  window.addEventListener('deviceorientationabsolute', handleOrientation, true);
-  window.addEventListener('deviceorientation', handleOrientation, true);
 
   function handleOrientation(event) {
     let heading = event.alpha;
@@ -156,13 +149,29 @@ function initCompass() {
       reading.textContent = "Unable to read compass heading.";
     }
   }
+
+  if (
+    typeof DeviceOrientationEvent !== "undefined" &&
+    typeof DeviceOrientationEvent.requestPermission === "function"
+  ) {
+    DeviceOrientationEvent.requestPermission()
+      .then(permissionState => {
+        if (permissionState === "granted") {
+          window.addEventListener("deviceorientation", handleOrientation, true);
+        } else {
+          reading.textContent = "Permission denied for compass.";
+        }
+      })
+      .catch(err => {
+        reading.textContent = "Error requesting compass access.";
+        console.error(err);
+      });
+  } else {
+    window.addEventListener("deviceorientation", handleOrientation, true);
+  }
 }
 
-// Activate compass only when 25U tab is selected
-document.querySelector("button[onclick*='25U']").addEventListener("click", () => {
-  initCompass();
+// Auto-run NSN loader on page load
+document.addEventListener('DOMContentLoaded', () => {
+  loadNSNs();
 });
-
-
-// Init on load
-document.addEventListener('DOMContentLoaded', loadNSNs);
