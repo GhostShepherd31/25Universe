@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>25Universe – Signal Toolkit</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .nsn-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      background: #111;
+      border-radius: 8px;
+      border: 1px solid #444;
+      margin-top: 1rem;
+    }
+
+    .nsn-item {
+      padding: 0.25rem 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .nsn-item:last-child {
+      border-bottom: none;
+    }
+
+    .compass-box {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin: 1rem auto;
+      border: 4px solid #4caf50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    #compass-needle {
+      font-size: 2rem;
+      transform-origin: center;
+      transition: transform 0.1s linear;
+    }
+
+    #compass-reading {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>25Universe – Signal Toolkit</h1>
+
+    <!-- Tab Navigation -->
+    <nav class="tabs">
+      <button onclick="showTab('25B', event)" class="active">25B</button>
+      <button onclick="showTab('25U', event)">25U</button>
+      <button onclick="showTab('25D', event)">25D</button>
+      <button onclick="showTab('NSN', event)">NSN Lookup</button>
+    </nav>
+
+    <!-- 25B SECTION -->
+    <section id="25B" class="tab-content active">
+      <div class="tool">
+        <h2>🧮 IP Address Breakdown</h2>
+        <label for="ipInput">Enter IP Address with Subnet (e.g., 192.168.1.0/24):</label>
+        <input type="text" id="ipInput" placeholder="192.168.1.0/24" />
+        <button onclick="calculateSubnet()">Calculate</button>
+        <pre id="ipOutput"></pre>
+      </div>
+
+      <div class="tool">
+        <h2>🖨️ How to Map a Printer (Windows)</h2>
+        <ol>
+          <li>Open the Start Menu → type <strong>Run</strong> and hit Enter.</li>
+          <li>Type <code>\\[PrinterServerName]</code> (e.g., <code>\\printer01</code>).</li>
+          <li>Press Enter to view shared printers.</li>
+          <li>Double-click the desired printer to install it.</li>
+          <li>Alternatively, go to <strong>Devices and Printers → Add a printer</strong>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 25U SECTION -->
+    <section id="25U" class="tab-content">
+      <div class="tool">
+        <h2>📻 Radio Setup – SINCGARS</h2>
+        <ol>
+          <li>Turn on the RT.</li>
+          <li>Set to <code>LD</code> and load COMSEC.</li>
+          <li>Select channel, mode (SC/FM), and load frequency.</li>
+          <li>Verify with PTT test.</li>
+        </ol>
+      </div>
+
+      <div class="tool">
+        <h2>📡 Antenna Placement Tips</h2>
+        <ul>
+          <li>Keep vertical and away from metal structures.</li>
+          <li>Elevate for better Line of Sight (LOS).</li>
+          <li>Use poles or trees to extend height when needed.</li>
+        </ul>
+      </div>
+
+      <!-- Real-time Compass -->
+      <div class="tool">
+        <h2>🧭 Real-Time Compass</h2>
+        <p>Hold your device flat and rotate it to see your heading update in real-time.</p>
+        <div id="compass" class="compass-box">
+          <div id="compass-needle">↑</div>
+          <div id="compass-reading">Heading: --°</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25D SECTION -->
+    <section id="25D" class="tab-content">
+      <div class="tool">
+        <h2>🔐 Network Hardening Checklist</h2>
+        <ul>
+          <li>Disable unused ports and services.</li>
+          <li>Use complex passwords and rotate regularly.</li>
+          <li>Apply least privilege principle to accounts.</li>
+          <li>Monitor event logs continuously.</li>
+        </ul>
+      </div>
+
+      <div class="tool">
+        <h2>🧑‍💻 Common Tools for 25D</h2>
+        <ul>
+          <li>Wireshark</li>
+          <li>Nessus or OpenVAS</li>
+          <li>DISA STIG Viewer</li>
+          <li>Nmap, Netcat</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- NSN SECTION -->
+    <section id="NSN" class="tab-content">
+      <div class="tool">
+        <h2>📦 NSN Lookup – Commo Equipment</h2>
+        <p>Below is a list of common communications equipment and their NSNs:</p>
+
+        <!-- 🔍 Search Box -->
+        <input type="text" id="nsnSearch" placeholder="Search NSN or Item..." oninput="filterNSNs()" />
+
+        <!-- 📤 Export Button -->
+        <button onclick="downloadCSV()">Export CSV</button>
+
+        <!-- 🔽 Results -->
+        <div id="nsnList" class="nsn-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
