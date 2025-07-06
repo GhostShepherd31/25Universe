@@ -143,3 +143,23 @@ pre {
 .tab-links a:hover {
   text-decoration: underline;
 }
+/* Styled link list */
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+}
+
+.link-list a {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.link-list a:hover {
+  color: #81c784;
+  transform: translateX(5px);
+}
