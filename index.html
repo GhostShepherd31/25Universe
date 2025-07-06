@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>25Universe – Signal Toolkit</title>
   <link rel="stylesheet" href="styles.css" />
-
   <style>
     .nsn-list {
       max-height: 400px;
@@ -16,16 +15,13 @@
       border: 1px solid #444;
       margin-top: 1rem;
     }
-
     .nsn-item {
       padding: 0.25rem 0;
       border-bottom: 1px solid #333;
     }
-
     .nsn-item:last-child {
       border-bottom: none;
     }
-
     .compass-box {
       position: relative;
       width: 150px;
@@ -40,13 +36,11 @@
       flex-direction: column;
       text-align: center;
     }
-
     #compass-needle {
       font-size: 2rem;
       transform-origin: center;
       transition: transform 0.1s linear;
     }
-
     #compass-reading {
       margin-top: 0.5rem;
       font-size: 1rem;
@@ -54,7 +48,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="container">
     <h1>25Universe – Signal Toolkit</h1>
@@ -112,44 +105,6 @@
       </div>
 
       <div class="tool">
-        <h2>🛠️ JCR and Radio Troubleshoot</h2>
-
-        <h3>ASIP:</h3>
-        <ul>
-          <li>Is the ASIP in the Right Location (Radio 1 = Bottom Mount, Radio 2 = Top Mount)?</li>
-          <li>Is the ASIP power on? (VAA power must be on)</li>
-          <li>Is ASIP on correct hopset? Look under ADMIN/MISC on FBCB2.</li>
-          <li>Does ASIP time match DAGR time?</li>
-          <li>Is ASIP on CH 1?</li>
-          <li>Is ASIP in FH mode?</li>
-          <li>Does ASIP have COMSEC? Is it the correct fill?</li>
-          <li>Have you done a check on FM voice?</li>
-          <li>Are the antennas screwed down on mounts? Antenna cables correctly connected? Are antennas still tied down?</li>
-          <li>W2 cable from Radio 1 to Power Amp (PA) on radio mount (VAA)?</li>
-          <li>Charged HUB battery in ASIP radio?</li>
-        </ul>
-
-        <h3>CABLES:</h3>
-        <ul>
-          <li>Are all cables clean and serviceable?</li>
-          <li>Are cables connected between CPU ↔ screen, KGV-72, power cable and SIAD?</li>
-          <li>DAGR ↔ Antenna cable, power cable and SIAD (J2 port)?</li>
-          <li>Transceiver ↔ KGV-72 and PMA?</li>
-          <li>Screen ↔ keyboard and CPU cable?</li>
-          <li>PMA ↔ DAGR, KGV-72 and Transceiver?</li>
-        </ul>
-
-        <h3>DAGR:</h3>
-        <ul>
-          <li>Does DAGR have COMSEC fill?</li>
-          <li>Is DAGR data cable correctly attached to DAGR in J2 port?</li>
-          <li>Is the DAGR power cable attached?</li>
-          <li>Is the DAGR antenna attached to DAGR?</li>
-          <li>Is the DAGR antenna (puck) underneath equipment or radar scattering camouflage netting?</li>
-        </ul>
-      </div>
-
-      <div class="tool">
         <h2>🧭 Real-Time Compass</h2>
         <p>Hold your device flat and rotate it to see your heading update in real-time.</p>
         <div id="compass" class="compass-box">
@@ -160,13 +115,13 @@
       </div>
 
       <div class="tool">
-        <h2>📖RTO Training</h2>
+        <h2>📖 ASIP Radio Troubleshooting</h2>
         <p>
-          For visual references and examples, visit:
-          <a href="rto-help.html" target="_blank" style="color: #4caf50; text-decoration: underline;">
-            RTO Help
-          </a>
+          Click below to access full ASIP troubleshooting and radio setup steps:
         </p>
+        <a href="rto-help.html" target="_blank" style="color: #4caf50; text-decoration: underline;">
+          ASIP Radio Troubleshooting →
+        </a>
       </div>
     </section>
 
@@ -232,7 +187,6 @@
       <div class="tool">
         <h2>📦 NSN Lookup – Commo Equipment</h2>
         <p>Below is a list of common communications equipment and their NSNs:</p>
-
         <input type="text" id="nsnSearch" placeholder="Search NSN or Item..." oninput="filterNSNs()" />
         <button onclick="downloadCSV()">Export CSV</button>
         <div id="nsnList" class="nsn-list"></div>
