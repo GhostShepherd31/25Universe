@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,179 +6,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>25Universe – Signal Toolkit</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    .nsn-list {
-      max-height: 400px;
-      overflow-y: auto;
-      padding: 0.5rem;
-      background: #111;
-      border-radius: 8px;
-      border: 1px solid #444;
-      margin-top: 1rem;
-    }
-    .nsn-item {
-      padding: 0.25rem 0;
-      border-bottom: 1px solid #333;
-    }
-    .nsn-item:last-child {
-      border-bottom: none;
-    }
-    .compass-box {
-      position: relative;
-      width: 150px;
-      height: 150px;
-      margin: 1rem auto;
-      border: 4px solid #4caf50;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #111;
-      flex-direction: column;
-      text-align: center;
-    }
-    #compass-needle {
-      font-size: 2rem;
-      transform-origin: center;
-      transition: transform 0.1s linear;
-    }
-    #compass-reading {
-      margin-top: 0.5rem;
-      font-size: 1rem;
-      color: #ccc;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
     <h1>25Universe – Signal Toolkit</h1>
 
-    <!-- Tab Navigation -->
+    <!-- Main Tab Navigation -->
     <nav class="tabs">
-      <button onclick="showTab('25B', event)" class="active">25B</button>
-      <button onclick="showTab('25U', event)">25U</button>
-      <button onclick="showTab('25H', event)">25H</button>
-      <button onclick="showTab('25D', event)">25D</button>
-      <button onclick="showTab('NSN', event)">NSN Lookup</button>
+      <button onclick="showTab('Network', event)" class="active">Network</button>
+      <button onclick="showTab('Radio', event)">Radio</button>
+      <button onclick="showTab('Cable', event)">Cable</button>
+      <button onclick="showTab('SKL', event)">SKL</button>
+      <button onclick="showTab('Maintenance', event)">Maintenance</button>
+      <button onclick="showTab('Security', event)">Security</button>
+      <button onclick="showTab('Automations', event)">Automations</button>
     </nav>
 
-    <!-- 25B SECTION -->
-    <section id="25B" class="tab-content active">
-      <div class="tool">
-        <h2>🧮 IP Address Breakdown</h2>
-        <label for="ipInput">Enter IP Address with Subnet (e.g., 192.168.1.0/24):</label>
-        <input type="text" id="ipInput" placeholder="192.168.1.0/24" />
-        <button onclick="calculateSubnet()">Calculate</button>
-        <pre id="ipOutput"></pre>
-      </div>
-
-  <h2>🧵 Network Cable Color Codes (CAT5/CAT5e)</h2>
-  <p>These are the wiring standards for RJ-45 Ethernet cables:</p>
-
-  <h3>T568A</h3>
-  <ol>
-    <li>White/Green</li>
-    <li>Green</li>
-    <li>White/Orange</li>
-    <li>Blue</li>
-    <li>White/Blue</li>
-    <li>Orange</li>
-    <li>White/Brown</li>
-    <li>Brown</li>
-  </ol>
-
-  <h3>T568B</h3>
-  <ol>
-    <li>White/Orange</li>
-    <li>Orange</li>
-    <li>White/Green</li>
-    <li>Blue</li>
-    <li>White/Blue</li>
-    <li>Green</li>
-    <li>White/Brown</li>
-    <li>Brown</li>
-  </ol>
-
-  <p><strong>Note:</strong> Both ends must match (A-A or B-B) for straight-through cables. Use A-B for crossover cables.</p>
-</div>
-
-      </div>
+    <!-- Tab Content Sections -->
+    <section id="Network" class="tab-content active">
+      <ul>
+        <li><a href="network-switches.html">Switches</a></li>
+        <li><a href="network-servers.html">Servers</a></li>
+        <li><a href="network-routers.html">Routers</a></li>
+        <li><a href="network-nsn.html">NSN</a></li>
+      </ul>
     </section>
 
-    <!-- 25U SECTION -->
-    <section id="25U" class="tab-content">
-
-      <div class="tool">
-        <h2>📡 Antenna Placement Tips</h2>
-        <ul>
-          <li>Keep vertical and away from metal structures.</li>
-          <li>Elevate for better Line of Sight (LOS).</li>
-          <li>Use poles or trees to extend height when needed.</li>
-        </ul>
-      </div>
-
-      <div class="tool">
-        <h2>📖 ASIP Radio Troubleshooting</h2>
-        <p>Click below to access full ASIP troubleshooting and radio setup steps:</p>
-        <a href="asip-help.html" target="_blank" style="color: #4caf50; text-decoration: underline;">
-          ASIP Radio Troubleshooting →
-        </a>
-      </div>
-
-      <div class="tool">
-        <h2>📘 RTO Training Resource</h2>
-        <p>General help and visual references for RTO duties:</p>
-        <a href="rto-help.html" target="_blank" style="color: #4caf50; text-decoration: underline;">
-          RTO Help Guide →
-        </a>
-      </div>
+    <section id="Radio" class="tab-content">
+      <ul>
+        <li><a href="radio-asip.html">ASIP</a></li>
+        <li><a href="radio-hf.html">HF</a></li>
+        <li><a href="radio-nsn.html">NSN</a></li>
+      </ul>
     </section>
 
-<!-- 25H SECTION -->
-<section id="25H" class="tab-content">
-  <div class="tool">
-    <h2>🧭 Real-Time Compass</h2>
-    <p>Hold your device flat and rotate it to see your heading update in real-time.</p>
-    <div id="compass" class="compass-box">
-      <div id="compass-needle">↑</div>
-      <div id="compass-reading">Heading: --°</div>
-    </div>
-    <button onclick="initCompass()">Start Compass</button>
-  </div>
-</section>
-
-    <!-- 25D SECTION -->
-    <section id="25D" class="tab-content">
-      <div class="tool">
-        <h2>🔐 Network Hardening Checklist</h2>
-        <ul>
-          <li>Disable unused ports and services.</li>
-          <li>Use complex passwords and rotate regularly.</li>
-          <li>Apply least privilege principle to accounts.</li>
-          <li>Monitor event logs continuously.</li>
-        </ul>
-      </div>
-
-      <div class="tool">
-        <h2>🧑‍💻 Common Tools for 25D</h2>
-        <ul>
-          <li>Wireshark</li>
-          <li>Nessus or OpenVAS</li>
-          <li>DISA STIG Viewer</li>
-          <li>Nmap, Netcat</li>
-        </ul>
-      </div>
+    <section id="Cable" class="tab-content">
+      <ul>
+        <li><a href="cable-cat5.html">Cat5 Color Codes</a></li>
+        <li><a href="cable-nsn.html">NSN</a></li>
+      </ul>
     </section>
 
-    <!-- NSN SECTION -->
-    <section id="NSN" class="tab-content">
-      <div class="tool">
-        <h2>📦 NSN Lookup – Commo Equipment</h2>
-        <p>Below is a list of common communications equipment and their NSNs:</p>
-        <input type="text" id="nsnSearch" placeholder="Search NSN or Item..." oninput="filterNSNs()" />
-        <button onclick="downloadCSV()">Export CSV</button>
-        <div id="nsnList" class="nsn-list"></div>
-      </div>
+    <section id="SKL" class="tab-content">
+      <ul>
+        <li><a href="skl-instructions.html">Use Instructions</a></li>
+        <li><a href="skl-nsn.html">NSN</a></li>
+      </ul>
+    </section>
+
+    <section id="Maintenance" class="tab-content">
+      <ul>
+        <li><a href="maintenance-nsn.html">NSN</a></li>
+      </ul>
+    </section>
+
+    <section id="Security" class="tab-content">
+      <ul>
+        <li><a href="security-programs.html">Programs</a></li>
+      </ul>
+    </section>
+
+    <section id="Automations" class="tab-content">
+      <ul>
+        <li><a href="automation-ad.html">Active Directory</a></li>
+        <li><a href="automation-printers.html">Printers</a></li>
+      </ul>
     </section>
   </div>
 
