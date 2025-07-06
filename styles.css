@@ -97,6 +97,7 @@ pre {
 .nsn-item:last-child {
   border-bottom: none;
 }
+
 #nsnSearch {
   margin-top: 1rem;
   width: 100%;
@@ -122,29 +123,23 @@ pre {
   color: white;
 }
 
-.compass-box {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  margin: 1rem auto;
-  border: 4px solid #4caf50;
-  border-radius: 50%;
+/* ✅ Tab Link List Styles */
+.tab-links {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #111;
   flex-direction: column;
-  text-align: center;
+  gap: 0.6rem;
 }
 
-#compass-needle {
-  font-size: 2rem;
-  transform-origin: center;
-  transition: transform 0.1s linear;
-}
-
-#compass-reading {
-  margin-top: 0.5rem;
+.tab-links a {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: bold;
   font-size: 1rem;
-  color: #ccc;
+}
+
+.tab-links a:hover {
+  text-decoration: underline;
 }
