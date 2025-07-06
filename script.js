@@ -130,47 +130,6 @@ function downloadCSV() {
   a.click();
 }
 
-// Real-Time Compass
-function initCompass() {
-  const needle = document.getElementById('compass-needle');
-  const reading = document.getElementById('compass-reading');
-
-  function handleOrientation(event) {
-    let heading = event.alpha;
-
-    if (typeof event.webkitCompassHeading !== "undefined") {
-      heading = event.webkitCompassHeading;
-    }
-
-    if (heading !== null && !isNaN(heading)) {
-      needle.style.transform = `rotate(${heading}deg)`;
-      reading.textContent = `Heading: ${Math.round(heading)}°`;
-    } else {
-      reading.textContent = "Unable to read compass heading.";
-    }
-  }
-
-  if (
-    typeof DeviceOrientationEvent !== "undefined" &&
-    typeof DeviceOrientationEvent.requestPermission === "function"
-  ) {
-    DeviceOrientationEvent.requestPermission()
-      .then(permissionState => {
-        if (permissionState === "granted") {
-          window.addEventListener("deviceorientation", handleOrientation, true);
-        } else {
-          reading.textContent = "Permission denied for compass.";
-        }
-      })
-      .catch(err => {
-        reading.textContent = "Error requesting compass access.";
-        console.error(err);
-      });
-  } else {
-    window.addEventListener("deviceorientation", handleOrientation, true);
-  }
-}
-
 // Auto-run NSN loader on page load
 document.addEventListener('DOMContentLoaded', () => {
   loadNSNs();
