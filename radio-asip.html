@@ -3,112 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ASIP NSN List – 25Universe</title>
+  <title>ASIP NSNs – 25Universe</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    .tool {
-      margin-top: 2rem;
-      background: #2c2c2c;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      border: 1px solid #444;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #333;
-    }
-    tr:nth-child(even) {
-      background-color: #222;
-    }
-    #searchInput {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 1rem;
-      border-radius: 5px;
-      border: none;
-    }
-    .back-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #4caf50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
     <h1>📻 ASIP Radio NSNs</h1>
 
-    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search by Nomenclature, NSN, or Description..." />
+    <div class="tool">
+      <h2>Common ASIP Equipment NSNs</h2>
+      <ul>
+        <li><strong>RT-1523E(C)/U:</strong> 5820-01-444-1219</li>
+        <li><strong>RT-1523C(C)/U:</strong> 5820-01-363-6929</li>
+        <li><strong>Battery Box (BA-5590 holder):</strong> 6160-01-435-6363</li>
+        <li><strong>Mounting Tray:</strong> 5340-01-457-9482</li>
+        <li><strong>Whip Antenna AS-3900A/VRC:</strong> 5985-01-416-7730</li>
+        <li><strong>Vehicle Amplifier Adapter (VAA):</strong> 5895-01-454-9280</li>
+      </ul>
+    </div>
 
     <div class="tool">
-      <table id="nsnTable">
-        <thead>
-          <tr>
-            <th>Nomenclature</th>
-            <th>NSN</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>ASIP</td><td></td><td></td></tr>
-          <tr><td>Electrical Equipment Mounting Base (MT-6352)</td><td>5975-01-188-8873</td><td>Radio Mount Base</td></tr>
-          <tr><td>AM-7239 (Vehicular Amplifier Adapter)</td><td>5985-01-188-8819</td><td>Radio Mount</td></tr>
-          <tr><td>AM-7238 (Power Amplifier)</td><td>5985-01-195-4844</td><td>Radio AMP</td></tr>
-          <tr><td>H-250 HANDMIC</td><td>5965-01-043-3463</td><td></td></tr>
-          <tr><td>W-2 Cable</td><td>4921-00-760-4505</td><td></td></tr>
-          <tr><td>CX-13302 30ft Power Cable Direct to Battery</td><td>5995-01-387-1036</td><td>Special Purpose Power Cable</td></tr>
-          <tr><td>CX-13303 7ft Power Cable Direct to Battery</td><td>5995-01-219-7009</td><td>Special Purpose Power Cable</td></tr>
-          <tr><td>CX-13303 4ft Power Cable</td><td>5995-01-300-9324</td><td>Special Purpose Power Cable</td></tr>
-          <tr><td>CG-3855 18ft RF Cable Antenna</td><td>5995-01-225-1660</td><td></td></tr>
-          <tr><td>CG-3856 30ft RF Cable Antenna</td><td>5995-01-437-8857</td><td>Special Purpose Antenna Cable</td></tr>
-          <tr><td>CX-13292 100ft Speaker Cable</td><td>5995-01-382-6869</td><td></td></tr>
-          <tr><td>CX-13298 RETRANS Cable (Dogbone)</td><td>5995-01-244-0016</td><td></td></tr>
-          <tr><td>CX-13292 50ft Speaker Cable</td><td>5995-01-358-1078</td><td></td></tr>
-          <tr><td>CX-13292 6ft Speaker Cable</td><td>5995-01-219-4704</td><td></td></tr>
-          <tr><td>Fill Cable</td><td>5995-01-066-7587</td><td></td></tr>
-          <tr><td>CX-13292 4ft Cable (SNAP)</td><td>5995-01-225-0505</td><td></td></tr>
-          <tr><td>CX-13292 7ft Cable (SNAP)</td><td>5995-01-335-7863</td><td></td></tr>
-          <tr><td>LS-671 Loud Speaker</td><td>5965-01-222-1420</td><td></td></tr>
-          <tr><td>H-250/U (No Screws For HF)</td><td>5965-00-043-3463</td><td></td></tr>
-          <tr><td>CX-11979 AC Input Power Cable (PP-6224)</td><td>5995-01-466-0217</td><td></td></tr>
-          <tr><td>AS-3683 3ft Whip Manpack Antenna</td><td>5985-01-235-9189</td><td></td></tr>
-          <tr><td>AS-4266 10ft Whip Manpack Antenna</td><td>5985-01-340-1043</td><td></td></tr>
-          <tr><td>SKL USB Adapter</td><td>5995-01-545-0167</td><td></td></tr>
-          <tr><td>LOCKING BAR</td><td>5340-01-392-0048</td><td></td></tr>
-          <tr><td>MANPACK RUCK</td><td>5820-01-322-3477</td><td></td></tr>
-        </tbody>
-      </table>
-
-      <a href="radio-nsn.html" class="back-btn">← Back to Radio NSN</a>
+      <a href="radio-nsn.html" style="color: #4caf50; text-decoration: underline;">← Back to Radio NSNs</a>
     </div>
   </div>
-
-  <script>
-    function filterTable() {
-      const input = document.getElementById("searchInput");
-      const filter = input.value.toLowerCase();
-      const rows = document.querySelectorAll("#nsnTable tbody tr");
-
-      rows.forEach(row => {
-        const cells = row.querySelectorAll("td");
-        const text = Array.from(cells).map(td => td.textContent.toLowerCase()).join(" ");
-        row.style.display = text.includes(filter) ? "" : "none";
-      });
-    }
-  </script>
 </body>
 </html>
-
-
