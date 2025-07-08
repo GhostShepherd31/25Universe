@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Compass</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .compass {
+      margin: 40px auto;
+      width: 300px;
+      height: 300px;
+      border: 8px solid #4caf50;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .needle {
+      width: 4px;
+      height: 140px;
+      background: red;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: rotate(0deg);
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧭 Compass</h1>
+  <p>Tap the button to activate your device's compass.</p>
+
+  <div class="compass">
+    <div class="needle" id="needle"></div>
+  </div>
+
+  <button id="startBtn">Start Compass</button>
+
+  <script>
+    const needle = document.getElementById("needle");
+    const startBtn = document.getElementById("startBtn");
+
+    function rotateNeedle(deg) {
+      needle.style.transform = `rotate(${deg}deg)`;
+    }
+
+    function handleOrientation(event) {
+      const heading = event.webkitCompassHeading || Math.abs(event.alpha - 360);
+      rotateNeedle(heading);
+    }
+
+    function startCompass() {
+      if (typeof DeviceOrientationEvent !== "undefined" &&
+          typeof DeviceOrientationEvent.requestPermission === "function") {
+        // iOS
+        DeviceOrientationEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === "granted") {
+              window.addEventListener("deviceorientation", handleOrientation, true);
+            } else {
+              alert("Permission denied. Compass won't work.");
+            }
+          })
+          .catch(console.error);
+      } else {
+        // Android
+        window.addEventListener("deviceorientationabsolute", handleOrientation, true);
+      }
+    }
+
+    startBtn.addEventListener("click", startCompass);
+  </script>
+</body>
+</html>
+
