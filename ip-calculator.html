@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <title>Network - IP Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
     <h1>Network - IP Calculator</h1>
-    <p>IP Calculator.</p>
-     <a href="index.html"
-       style="display: inline-block;
-              margin-top: 20px;
-              padding: 10px 15px;
-              color: #fff;
-              text-decoration: none;
-              border-radius: 5px;">
-       ⬅ Back
+    <p>Enter an IP address in CIDR format (e.g., <code>192.168.1.0/24</code>) to calculate network details.</p>
+
+    <div class="tool">
+      <input type="text" id="ipInput" placeholder="Enter IP address with CIDR (e.g., 192.168.1.0/24)" />
+      <button onclick="calculateSubnet()">Calculate</button>
+      <pre id="ipOutput"></pre>
+    </div>
+
+    <a href="index.html" class="btn" style="margin-top: 20px; display: inline-block;">⬅ Back</a>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
