@@ -33,6 +33,18 @@
       transform: rotate(0deg);
     }
 
+    .dir-label {
+      position: absolute;
+      font-weight: bold;
+      color: #4caf50;
+      font-size: 1.2rem;
+    }
+
+    .north { top: 5px; left: 50%; transform: translateX(-50%); }
+    .east { top: 50%; right: 5px; transform: translateY(-50%); }
+    .south { bottom: 5px; left: 50%; transform: translateX(-50%); }
+    .west { top: 50%; left: 5px; transform: translateY(-50%); }
+
     .button-group {
       display: flex;
       flex-direction: column;
@@ -55,6 +67,32 @@
     .btn:hover {
       background-color: #45a049;
     }
+
+    #degreeDisplay {
+      font-size: 1.5rem;
+      margin-top: 10px;
+      color: #81c784;
+    }
+
+    @media screen and (max-width: 480px) {
+      .compass {
+        width: 220px;
+        height: 220px;
+      }
+
+      .needle {
+        height: 100px;
+      }
+
+      .dir-label {
+        font-size: 1rem;
+      }
+
+      .btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -62,10 +100,14 @@
   <p>Tap the button to activate your device's compass. (Only works on cell phones)</p>
 
   <div class="compass">
-   <div class="needle" id="needle"></div>
-</div>
-<p id="degreeDisplay" style="font-size: 1.5rem; margin-top: 10px;">Heading: 0°</p>
+    <div class="needle" id="needle"></div>
+    <div class="dir-label north">N</div>
+    <div class="dir-label east">E</div>
+    <div class="dir-label south">S</div>
+    <div class="dir-label west">W</div>
+  </div>
 
+  <p id="degreeDisplay">Heading: 0° (N)</p>
 
   <div class="button-group">
     <button id="startBtn" class="btn">Start Compass</button>
@@ -75,20 +117,28 @@
   <script>
     const needle = document.getElementById("needle");
     const startBtn = document.getElementById("startBtn");
+    const degreeDisplay = document.getElementById("degreeDisplay");
+
+    function getDirection(deg) {
+      const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+      const index = Math.round(deg / 45) % 8;
+      return directions[index];
+    }
 
     function rotateNeedle(deg) {
       needle.style.transform = `rotate(${deg}deg)`;
+      const direction = getDirection(deg);
+      degreeDisplay.textContent = `Heading: ${Math.round(deg)}° (${direction})`;
     }
 
     function handleOrientation(event) {
       let heading = event.webkitCompassHeading;
 
       if (typeof heading === "undefined") {
-        // fallback if webkitCompassHeading isn't available
         heading = 360 - event.alpha;
       }
 
-      if (typeof heading === "number") {
+      if (typeof heading === "number" && !isNaN(heading)) {
         rotateNeedle(heading);
       }
     }
@@ -98,7 +148,6 @@
         typeof DeviceOrientationEvent !== "undefined" &&
         typeof DeviceOrientationEvent.requestPermission === "function"
       ) {
-        // iOS
         DeviceOrientationEvent.requestPermission()
           .then((permissionState) => {
             if (permissionState === "granted") {
@@ -111,7 +160,6 @@
             console.error("Compass error:", err);
           });
       } else {
-        // Android
         window.addEventListener("deviceorientationabsolute", handleOrientation, true);
       }
     }
