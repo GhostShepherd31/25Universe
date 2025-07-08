@@ -130,13 +130,12 @@ function downloadCSV() {
   a.click();
 }
 
-// Auto-run NSN loader on page load
+// On Page Load
 document.addEventListener('DOMContentLoaded', () => {
+  // Load NSN Data
   loadNSNs();
-});
 
-// Compass Functionality
-document.addEventListener('DOMContentLoaded', () => {
+  // Compass Setup
   const needle = document.getElementById("needle");
   const degreeDisplay = document.getElementById("degreeDisplay");
   const startBtn = document.getElementById("startBtn");
@@ -183,4 +182,3 @@ document.addEventListener('DOMContentLoaded', () => {
     startBtn.addEventListener("click", startCompass);
   }
 });
-
