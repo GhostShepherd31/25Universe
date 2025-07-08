@@ -141,8 +141,8 @@ pre {
 /* ✅ Compass Styles */
 .compass {
   margin: 2rem auto;
-  width: 280px;
-  height: 280px;
+  width: 300px;
+  height: 300px;
   border: 8px solid #4caf50;
   border-radius: 50%;
   position: relative;
@@ -159,6 +159,18 @@ pre {
   transform: rotate(0deg);
 }
 
+.dir-label {
+  position: absolute;
+  font-weight: bold;
+  color: #4caf50;
+  font-size: 1.2rem;
+}
+
+.dir-label.north { top: 5px; left: 50%; transform: translateX(-50%); }
+.dir-label.east  { top: 50%; right: 5px; transform: translateY(-50%); }
+.dir-label.south { bottom: 5px; left: 50%; transform: translateX(-50%); }
+.dir-label.west  { top: 50%; left: 5px; transform: translateY(-50%); }
+
 .readout {
   font-size: 1.5rem;
   margin-top: 1rem;
@@ -168,12 +180,16 @@ pre {
 /* ✅ Responsive Compass Adjustments */
 @media screen and (max-width: 500px) {
   .compass {
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
   }
 
   .needle {
     height: 100px;
+  }
+
+  .dir-label {
+    font-size: 1rem;
   }
 
   .readout {
