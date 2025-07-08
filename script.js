@@ -134,3 +134,53 @@ function downloadCSV() {
 document.addEventListener('DOMContentLoaded', () => {
   loadNSNs();
 });
+
+// Compass Functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const needle = document.getElementById("needle");
+  const degreeDisplay = document.getElementById("degreeDisplay");
+  const startBtn = document.getElementById("startBtn");
+
+  function rotateNeedle(deg) {
+    needle.style.transform = `rotate(${deg}deg)`;
+    degreeDisplay.textContent = `Heading: ${Math.round(deg)}°`;
+  }
+
+  function handleOrientation(event) {
+    let heading = event.webkitCompassHeading;
+
+    if (typeof heading === "undefined") {
+      heading = 360 - event.alpha;
+    }
+
+    if (typeof heading === "number" && !isNaN(heading)) {
+      rotateNeedle(heading);
+    }
+  }
+
+  function startCompass() {
+    if (
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function"
+    ) {
+      DeviceOrientationEvent.requestPermission()
+        .then((permissionState) => {
+          if (permissionState === "granted") {
+            window.addEventListener("deviceorientation", handleOrientation, true);
+          } else {
+            alert("Permission denied. Compass won't work.");
+          }
+        })
+        .catch((err) => {
+          console.error("Compass error:", err);
+        });
+    } else {
+      window.addEventListener("deviceorientationabsolute", handleOrientation, true);
+    }
+  }
+
+  if (startBtn) {
+    startBtn.addEventListener("click", startCompass);
+  }
+});
+
