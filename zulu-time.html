@@ -5,44 +5,53 @@
   <title>Zulu Time</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
     #time-display {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #0f0;
+      padding: 20px 30px;
+      font-size: 2rem;
+      font-family: monospace;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    }
+
+    .back-button {
       position: fixed;
       bottom: 20px;
-      right: 20px;
-      background-color: #222;
-      color: #0f0;
-      padding: 10px 15px;
-      font-family: monospace;
+      left: 100px;
+      padding: 10px 15px; 
+      color: #fff; 
+      text-decoration: none;
       border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
-      text-align: right;
-      line-height: 1.4;
+      background-color: #4caf50;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Zulu Time</h1>
-    <p>Zulu clock with local time</p>
+    <h1 style="text-align: center; color: #4caf50;">Zulu Time</h1>
+    <p style="text-align: center;">Zulu and Local Clock Display</p>
 
-    <!-- Back Button -->
-    <a href="index.html"
-        style="position: fixed;
-          bottom: 20px;
-          left: 100px;
-          padding: 10px 15px; 
-          color: #fff; 
-          text-decoration: none;
-          border-radius: 5px;
-          background-color: #4caf50;">
-       ⬅ Back
-    </a>
-
-    <!-- Time Display -->
+    <!-- Time Display Centered -->
     <div id="time-display">
       Local Time: --:--:--<br>
       Zulu Time: --:--:--Z
     </div>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">⬅ Back</a>
   </div>
 
   <!-- JavaScript Clock -->
