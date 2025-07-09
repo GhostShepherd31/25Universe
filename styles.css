@@ -1,12 +1,10 @@
 /* Global Styles */
 body {
   font-family: Arial, sans-serif;
-  background: url('https://images.unsplash.com/photo-1537432376769-00a0b9c5cfd2?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-  background-size: cover;
-  background-color: #1c1c1c; /* Fallback if image doesn't load */
-  color: white;
+  background-color: #1e1e1e;
+  color: #ffffff;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 
 .container {
