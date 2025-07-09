@@ -4,62 +4,115 @@
   <meta charset="UTF-8" />
   <title>Cable – CAT5</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background-color: #1c1c1c;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #4caf50;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: #ffffff;
+    }
+
+    ol, ul {
+      padding-left: 20px;
+    }
+
+    .pinout-wrapper {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .pinout-text, .pinout-image {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .pinout-image img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    a.back-button {
+      position: fixed;
+      bottom: 20px;
+      left: 100px;
+      padding: 10px 15px;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      background-color: #4caf50;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>🧵 Cable – CAT5 Color Codes</h1>
     <p>Standard wiring layout for RJ-45 Ethernet cables:</p>
 
-    <div class="pinout-section">
-      <div class="pinout">
-        <h3>T568A</h3>
-        <ol>
-          <li>White/Green</li>
-          <li>Green</li>
-          <li>White/Orange</li>
-          <li>Blue</li>
-          <li>White/Blue</li>
-          <li>Orange</li>
-          <li>White/Brown</li>
-          <li>Brown</li>
-        </ol>
+    <div class="pinout-wrapper">
+      <!-- Text Content -->
+      <div class="pinout-text">
+        <div class="pinout">
+          <h3>T568A</h3>
+          <ol>
+            <li>White/Green</li>
+            <li>Green</li>
+            <li>White/Orange</li>
+            <li>Blue</li>
+            <li>White/Blue</li>
+            <li>Orange</li>
+            <li>White/Brown</li>
+            <li>Brown</li>
+          </ol>
+        </div>
+
+        <div class="pinout">
+          <h3>T568B</h3>
+          <ol>
+            <li>White/Orange</li>
+            <li>Orange</li>
+            <li>White/Green</li>
+            <li>Blue</li>
+            <li>White/Blue</li>
+            <li>Green</li>
+            <li>White/Brown</li>
+            <li>Brown</li>
+          </ol>
+        </div>
+
+        <h3>Wiring Types</h3>
+        <ul>
+          <li><strong>Straight-through:</strong> Both ends use T568A or both use T568B</li>
+          <li><strong>Crossover:</strong> One end uses T568A and the other uses T568B</li>
+        </ul>
       </div>
 
-      <div class="pinout">
-        <h3>T568B</h3>
-        <ol>
-          <li>White/Orange</li>
-          <li>Orange</li>
-          <li>White/Green</li>
-          <li>Blue</li>
-          <li>White/Blue</li>
-          <li>Green</li>
-          <li>White/Brown</li>
-          <li>Brown</li>
-        </ol>
+      <!-- Image Content -->
+      <div class="pinout-image">
+        <img src="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Slides/Cable.png"
+             alt="RJ45 Pinout T568A and T568B" />
       </div>
     </div>
 
-    <h3>Wiring Types</h3>
-    <ul>
-      <li><strong>Straight-through:</strong> Both ends use T568A or both use T568B</li>
-      <li><strong>Crossover:</strong> One end uses T568A and the other uses T568B</li>
-    </ul>
-
-    <img src="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Slides/Cable.png" alt="RJ45 Pinout T568A and T568B" style="width: 100%; max-width: 600px; display: block; margin: 20px auto;" />
-
-<a href="index.html" 
-   style="position: fixed;
-          bottom: 20px;
-          left: 100px;
-          padding: 10px 15px; 
-          color: #fff; 
-          text-decoration: none;
-          border-radius: 5px;
-          background-color: #4caf50;">
-  ⬅ Back
-</a>
-  
+    <a class="back-button" href="index.html">⬅ Back</a>
   </div>
 </body>
 </html>
