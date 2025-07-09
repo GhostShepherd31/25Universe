@@ -4,26 +4,67 @@
   <meta charset="UTF-8">
   <title>Technical Manuals</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background-color: #1c1c1c;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      margin-top: 30px;
+      color: #4caf50;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back-button {
+      margin-top: auto;
+      padding: 15px;
+    }
+
+    .back-button a {
+      background-color: #007BFF;
+      padding: 10px 15px;
+      border-radius: 5px;
+      display: inline-block;
+      color: white;
+    }
+  </style>
 </head>
 <body>
   <h1>📚 Technical Manuals</h1>
 
-  <!-- Fixed Back Button -->
-  <a href="index.html"
-     style="display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;">
-     ⬅ Back
-  </a>
-
-  <!-- Technical Manual Links -->
   <ul>
     <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRM-36%20TM%209-6625-1697-10.pdf" target="_blank">PRM-36 TM</a></li>
     <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRM-36%20TM%209-6625-1697-23P.pdf" target="_blank">PRM-36 23&P</a></li>
   </ul>
+
+  <!-- Back Button at the Bottom -->
+  <div class="back-button">
+    <a href="index.html">⬅ Back</a>
+  </div>
 </body>
 </html>
