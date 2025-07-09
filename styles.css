@@ -1,10 +1,12 @@
 /* Global Styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #1e1e1e;
-  color: #ffffff;
+  background: url('https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Slides/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #1c1c1c; /* fallback color */
+  color: white;
   margin: 0;
-  padding: 0;
+  padding: 20px;
 }
 
 .container {
