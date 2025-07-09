@@ -9,80 +9,88 @@
       background-color: #1c1c1c;
       color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
       padding: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      text-align: center;
     }
 
     h1 {
-      margin-top: 30px;
+      margin: 30px 0 10px;
       color: #4caf50;
     }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
+    .manual-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    li {
-      margin: 10px 0;
+    .manual-item {
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      padding: 15px;
+      transition: background-color 0.2s;
     }
 
-    a {
+    .manual-item a {
       color: white;
       text-decoration: none;
+      display: block;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .manual-item:hover {
+      background-color: #3a3a3a;
     }
 
     .back-button {
       margin-top: auto;
-      padding: 15px;
+      padding: 20px;
     }
 
     .back-button a {
       background-color: #4caf50;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border-radius: 5px;
-      display: inline-block;
       color: white;
+      text-decoration: none;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <h1>📚 Technical Manuals</h1>
 
-  <ul>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRM-36%20TM%209-6625-1697-10.pdf" target="_blank">PRM-36 TM</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRM-36%20TM%209-6625-1697-23P.pdf" target="_blank">PRM-36 23&P</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/3kW%20Tactical%20Generator%20Set.pdf" target="_blank">3kW Generator</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-150(C)%20Applications%20Handbook.pdf" target="_blank">AN/PRC HF Manpack</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-150(C)%20Operation%20Manual%20HF%20Radio.pdf" target="_blank">HF Operator Manual</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-VRC-104.pdf" target="_blank">AN/VRC-104 TM</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/KGV72%20TM.pdf" target="_blank">KGV-72 OPR/Field Manual</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/R90451%20-%20HCLOS.pdf" target="_blank">HCLOS TM</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/RF-291%20ANTENNA.pdf" target="_blank">Harris RF-291 Antenna</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/TM%2011-5985-435-12P%20HCLOS%2015M%20Mast.pdf" target="_blank">15 Meter Mast</a></li>
-    <li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/UHF.VHF%20technology.pdf" target="_blank">VHF/UHF Manual</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/117%20Intermediate%20Maint.pdf" target="_blank">AN/PRC-117F Manpack Maint</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/117%20Ops%20Manual.pdf" target="_blank">AN/PRC-117F Manpack OPR</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/117%20Quick%20Reference%20Guide.pdf" target="_blank">AN/PRC-117F Pocket Guide</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-148%20TM%2011-5820-1186-13%26P.pdf" target="_blank">MBITR 13&P</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-152%20Handheld%20Radio%20Operations.pdf" target="_blank">AN/PRC=152 OPR</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/F43G%20Programming%20Guide.pdf" target="_blank">IC-F43G Radio</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/F43GS%20Readme%20Addendum.pdf" target="_blank">IC-F43GS</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/Operator%20Manual%2084329E.pdf" target="_blank">AN/PRC-148</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PC%20Programmer%20Manual%2084333E2.pdf" target="_blank">MBITR Programmer</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRC-158%20Operation%20Manual.pdf" target="_blank">AN/PRC-158 OPR</a></li>
-    li><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRC-160%20Student%20Guide.pdf" target="_blank">Wide Band HF/VHF Student Guide/a></li>
-  </ul>
+  <div class="manual-grid">
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRM-36%20TM%209-6625-1697-10.pdf" target="_blank">PRM-36 TM</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRM-36%20TM%209-6625-1697-23P.pdf" target="_blank">PRM-36 23&P</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/3kW%20Tactical%20Generator%20Set.pdf" target="_blank">3kW Generator</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-150(C)%20Applications%20Handbook.pdf" target="_blank">AN/PRC HF Manpack</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-150(C)%20Operation%20Manual%20HF%20Radio.pdf" target="_blank">HF Operator Manual</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-VRC-104.pdf" target="_blank">AN/VRC-104 TM</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/KGV72%20TM.pdf" target="_blank">KGV-72 OPR/Field Manual</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/R90451%20-%20HCLOS.pdf" target="_blank">HCLOS TM</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/RF-291%20ANTENNA.pdf" target="_blank">Harris RF-291 Antenna</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/TM%2011-5985-435-12P%20HCLOS%2015M%20Mast.pdf" target="_blank">15 Meter Mast</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/UHF.VHF%20technology.pdf" target="_blank">VHF/UHF Manual</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/117%20Intermediate%20Maint.pdf" target="_blank">AN/PRC-117F Maint</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/117%20Ops%20Manual.pdf" target="_blank">AN/PRC-117F OPR</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/117%20Quick%20Reference%20Guide.pdf" target="_blank">AN/PRC-117F Guide</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-148%20TM%2011-5820-1186-13%26P.pdf" target="_blank">MBITR 13&P</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/AN-PRC-152%20Handheld%20Radio%20Operations.pdf" target="_blank">AN/PRC-152 OPR</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/F43G%20Programming%20Guide.pdf" target="_blank">IC-F43G Radio</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/F43GS%20Readme%20Addendum.pdf" target="_blank">IC-F43GS</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/Operator%20Manual%2084329E.pdf" target="_blank">AN/PRC-148</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PC%20Programmer%20Manual%2084333E2.pdf" target="_blank">MBITR Programmer</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRC-158%20Operation%20Manual.pdf" target="_blank">AN/PRC-158 OPR</a></div>
+    <div class="manual-item"><a href="https://raw.githubusercontent.com/GhostShepherd31/25Universe/main/Manuals/PRC-160%20Student%20Guide.pdf" target="_blank">WB HF/VHF Guide</a></div>
+  </div>
 
-  <!-- Back Button at the Bottom -->
   <div class="back-button">
     <a href="index.html">⬅ Back</a>
   </div>
