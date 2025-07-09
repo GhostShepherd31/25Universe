@@ -4,19 +4,82 @@
   <meta charset="UTF-8" />
   <title>Satellite - GPS</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background-color: #1c1c1c;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 20px 0;
+      color: #4caf50;
+    }
+
+    #map {
+      height: 500px;
+      width: 100%;
+      max-width: 1000px;
+      margin: 20px auto;
+      border-radius: 8px;
+    }
+
+    .back-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🗄Satellite - GPS</h1>
-    <p>GPS.</p>
-     <a href="index.html"
-       style="display: inline-block;
-              margin-top: 20px;
-              padding: 10px 15px;
-              color: #fff;
-              text-decoration: none;
-              border-radius: 5px;">
-       ⬅ Back
-  </div>
+  <h1>🛰️ Satellite - GPS</h1>
+
+  <div id="map">Loading map...</div>
+
+  <a class="back-button" href="index.html">⬅ Back</a>
+
+  <script>
+    function initMap() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+              zoom: 15,
+              center: userLocation,
+              mapTypeId: 'satellite'
+            });
+
+            new google.maps.Marker({
+              position: userLocation,
+              map: map,
+              title: "You are here"
+            });
+          },
+          () => {
+            document.getElementById("map").innerHTML = "⚠️ Location access denied.";
+          }
+        );
+      } else {
+        document.getElementById("map").innerHTML = "⚠️ Geolocation not supported.";
+      }
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXI5iFueNMLmjqSH4nB3QMKEIAcQlNF_g&callback=initMap">
+  </script>
 </body>
 </html>
+
