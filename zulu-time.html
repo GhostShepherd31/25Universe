@@ -5,9 +5,9 @@
   <title>Zulu Time</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    #zulu-clock {
+    #time-display {
       position: fixed;
-      top: 20px;
+      bottom: 20px;
       right: 20px;
       background-color: #222;
       color: #0f0;
@@ -15,16 +15,15 @@
       font-family: monospace;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+      text-align: right;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Zulu Time</h1>
-    <p>Zulu clock</p>
-
-    <!-- Zulu Clock Display -->
-    <div id="zulu-clock">Zulu Time: --:--:--Z</div>
+    <p>Zulu clock with local time</p>
 
     <!-- Back Button -->
     <a href="index.html"
@@ -38,20 +37,36 @@
           background-color: #4caf50;">
        ⬅ Back
     </a>
+
+    <!-- Time Display -->
+    <div id="time-display">
+      Local Time: --:--:--<br>
+      Zulu Time: --:--:--Z
+    </div>
   </div>
 
-  <!-- JavaScript for Zulu Clock -->
+  <!-- JavaScript Clock -->
   <script>
-    function updateZuluClock() {
+    function updateClock() {
       const now = new Date();
-      const hours = String(now.getUTCHours()).padStart(2, '0');
-      const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-      const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-      document.getElementById('zulu-clock').textContent = `Zulu Time: ${hours}:${minutes}:${seconds}Z`;
+
+      // Local Time
+      const localHours = String(now.getHours()).padStart(2, '0');
+      const localMinutes = String(now.getMinutes()).padStart(2, '0');
+      const localSeconds = String(now.getSeconds()).padStart(2, '0');
+
+      // Zulu (UTC) Time
+      const zuluHours = String(now.getUTCHours()).padStart(2, '0');
+      const zuluMinutes = String(now.getUTCMinutes()).padStart(2, '0');
+      const zuluSeconds = String(now.getUTCSeconds()).padStart(2, '0');
+
+      document.getElementById('time-display').innerHTML = 
+        `Local Time: ${localHours}:${localMinutes}:${localSeconds}<br>` +
+        `Zulu Time: ${zuluHours}:${zuluMinutes}:${zuluSeconds}Z`;
     }
 
-    setInterval(updateZuluClock, 1000);
-    updateZuluClock(); // Run immediately on load
+    setInterval(updateClock, 1000);
+    updateClock(); // Run immediately
   </script>
 </body>
 </html>
