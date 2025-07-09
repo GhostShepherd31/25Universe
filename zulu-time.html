@@ -4,11 +4,29 @@
   <meta charset="UTF-8" />
   <title>Zulu Time</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    #zulu-clock {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #222;
+      color: #0f0;
+      padding: 10px 15px;
+      font-family: monospace;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Zulu Time</h1>
     <p>Zulu clock</p>
+
+    <!-- Zulu Clock Display -->
+    <div id="zulu-clock">Zulu Time: --:--:--Z</div>
+
+    <!-- Back Button -->
     <a href="index.html"
         style="position: fixed;
           bottom: 20px;
@@ -19,8 +37,21 @@
           border-radius: 5px;
           background-color: #4caf50;">
        ⬅ Back
-</a>
-
+    </a>
   </div>
+
+  <!-- JavaScript for Zulu Clock -->
+  <script>
+    function updateZuluClock() {
+      const now = new Date();
+      const hours = String(now.getUTCHours()).padStart(2, '0');
+      const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+      document.getElementById('zulu-clock').textContent = `Zulu Time: ${hours}:${minutes}:${seconds}Z`;
+    }
+
+    setInterval(updateZuluClock, 1000);
+    updateZuluClock(); // Run immediately on load
+  </script>
 </body>
 </html>
