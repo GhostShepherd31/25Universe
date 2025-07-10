@@ -56,39 +56,6 @@ Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
   `;
 }
 
-// Full-featured IPv6 Calculator using ip-address.js
-function calculateIPv6() {
-  const input = document.getElementById('ipv6Input').value.trim();
-  const output = document.getElementById('ipv6Output');
-
-  if (!input.includes('/')) {
-    output.textContent = 'Invalid format. Example: 2001:db8::/64';
-    return;
-  }
-
-  try {
-    const address = new Address6(input);
-
-    if (!address.isValid()) {
-      output.textContent = 'Invalid IPv6 address.';
-      return;
-    }
-
-    const subnetInfo = address.subnet;
-    output.innerHTML = `
-IPv6 Address: ${address.correctForm()}<br>
-Canonical Form: ${address.canonicalForm()}<br>
-Big Integer: ${address.bigInteger().toString()}<br>
-Prefix Length: /${address.subnetMask}<br>
-Start: ${address.startAddress().correctForm()}<br>
-End: ${address.endAddress().correctForm()}<br>
-Possible Hosts: ${address.possibleAddresses()}<br>
-  `;
-  } catch (err) {
-    output.textContent = 'Error parsing IPv6: ' + err.message;
-  }
-}
-
 // NSN JSON Loader
 function loadNSNs() {
   fetch('nsn-data.json')
@@ -209,4 +176,39 @@ function setupCompass() {
 document.addEventListener('DOMContentLoaded', () => {
   loadNSNs();
   setupCompass();
+
+  // Safe IPv6 calculation binding after Address6 is loaded
+  const ipv6Button = document.querySelector('button[onclick="calculateIPv6()"]');
+  if (ipv6Button) {
+    ipv6Button.addEventListener('click', () => {
+      const input = document.getElementById('ipv6Input').value.trim();
+      const output = document.getElementById('ipv6Output');
+
+      if (!input.includes('/')) {
+        output.textContent = 'Invalid format. Example: 2001:db8::/64';
+        return;
+      }
+
+      try {
+        const address = new Address6(input);
+
+        if (!address.isValid()) {
+          output.textContent = 'Invalid IPv6 address.';
+          return;
+        }
+
+        output.innerHTML = `
+IPv6 Address: ${address.correctForm()}<br>
+Canonical Form: ${address.canonicalForm()}<br>
+Big Integer: ${address.bigInteger().toString()}<br>
+Prefix Length: /${address.subnetMask}<br>
+Start: ${address.startAddress().correctForm()}<br>
+End: ${address.endAddress().correctForm()}<br>
+Possible Hosts: ${address.possibleAddresses()}<br>
+        `;
+      } catch (err) {
+        output.textContent = 'Error parsing IPv6: ' + err.message;
+      }
+    });
+  }
 });
