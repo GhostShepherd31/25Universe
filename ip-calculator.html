@@ -5,9 +5,6 @@
   <title>Network - IP Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- ✅ Include Address6 library -->
-  <script src="https://unpkg.com/ip-address/dist/ip-address-globals.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -43,7 +40,8 @@
     </a>
   </div>
 
-  <!-- ✅ Make sure this comes AFTER the Address6 script -->
+  <!-- ✅ These MUST be in this order, at the end -->
+  <script src="https://unpkg.com/ip-address/dist/ip-address-globals.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
