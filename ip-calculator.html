@@ -9,15 +9,25 @@
 <body>
   <div class="container">
     <h1>Network - IP Calculator</h1>
-    <p>Enter an IP address in CIDR format (e.g., <code>192.168.1.0/24</code>) to calculate network details.</p>
+    <p>Enter an IPv4 or IPv6 address in CIDR format (e.g., <code>192.168.1.0/24</code> or <code>2001:db8::/64</code>) to calculate network details.</p>
 
+    <!-- IPv4 Calculator -->
     <div class="tool">
-      <input type="text" id="ipInput" placeholder="Enter IP address with CIDR (e.g., 192.168.1.0/24)" />
-      <button onclick="calculateSubnet()">Calculate</button>
+      <h3>IPv4 Calculator</h3>
+      <input type="text" id="ipInput" placeholder="Enter IPv4 address with CIDR (e.g., 192.168.1.0/24)" />
+      <button onclick="calculateSubnet()">Calculate IPv4</button>
       <pre id="ipOutput"></pre>
     </div>
 
-    <!-- ✅ Back button properly closed and aligned -->
+    <!-- IPv6 Calculator -->
+    <div class="tool">
+      <h3>IPv6 Calculator</h3>
+      <input type="text" id="ipv6Input" placeholder="Enter IPv6 address with CIDR (e.g., 2001:db8::/64)" />
+      <button onclick="calculateIPv6()">Calculate IPv6</button>
+      <pre id="ipv6Output"></pre>
+    </div>
+
+    <!-- Back button -->
     <a href="index.html"
        style="display: inline-block;
               margin-top: 20px;
