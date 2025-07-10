@@ -56,7 +56,7 @@ Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
   `;
 }
 
-// IPv6 Calculator
+// Full-featured IPv6 Calculator using ip-address.js
 function calculateIPv6() {
   const input = document.getElementById('ipv6Input').value.trim();
   const output = document.getElementById('ipv6Output');
@@ -66,20 +66,27 @@ function calculateIPv6() {
     return;
   }
 
-  const [address, prefix] = input.split('/');
-  const cidr = parseInt(prefix);
-  const ipv6Pattern = /^[0-9a-fA-F:]{2,39}$/;
+  try {
+    const address = new Address6(input);
 
-  if (!ipv6Pattern.test(address) || isNaN(cidr) || cidr < 1 || cidr > 128) {
-    output.textContent = 'Invalid IPv6/CIDR format. Example: 2001:db8::/64';
-    return;
-  }
+    if (!address.isValid()) {
+      output.textContent = 'Invalid IPv6 address.';
+      return;
+    }
 
-  output.textContent = `
-IPv6 Address: ${address}
-Prefix Length: /${cidr}
-(This is a basic preview. Full IPv6 calculations require an advanced parser.)
+    const subnetInfo = address.subnet;
+    output.innerHTML = `
+IPv6 Address: ${address.correctForm()}<br>
+Canonical Form: ${address.canonicalForm()}<br>
+Big Integer: ${address.bigInteger().toString()}<br>
+Prefix Length: /${address.subnetMask}<br>
+Start: ${address.startAddress().correctForm()}<br>
+End: ${address.endAddress().correctForm()}<br>
+Possible Hosts: ${address.possibleAddresses()}<br>
   `;
+  } catch (err) {
+    output.textContent = 'Error parsing IPv6: ' + err.message;
+  }
 }
 
 // NSN JSON Loader
