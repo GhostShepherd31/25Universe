@@ -5,22 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>25Universe – Signal Toolkit</title>
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- IPv6 parser library -->
-  <script src="https://unpkg.com/ip-address/dist/ip-address-globals.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>25Universe – Signal Toolkit</h1>
 
-    <!-- ... your HTML content like tabs, tools, etc. ... -->
-
-  </div>
-
-  <!-- ✅ Your own JavaScript file goes at the end of the body -->
-  <script src="script.js"></script>
-</body>
-</html>
+    <!-- Main Tab Navigation -->
+    <nav class="tabs">
+      <button onclick="showTab('Network', event)" class="active">Network</button>
+      <button onclick="showTab('Cable', event)">Cable</button>
+      <button onclick="showTab('Maintenance', event)">Maintenance</button>
+      <button onclick="showTab('Satellite', event)">Satellite</button>
+      <button onclick="showTab('Automations', event)">Automations</button>
+      <button onclick="showTab('Training', event)">Training</button>
+    </nav>
 
     <!-- Main Tab Navigation -->
     <nav class="tabs">
