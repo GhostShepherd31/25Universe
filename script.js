@@ -15,7 +15,7 @@ function showTab(tabId, event) {
   }
 }
 
-// IP Subnet Calculator
+// IP Subnet Calculator (IPv4)
 function calculateSubnet() {
   const input = document.getElementById('ipInput').value.trim();
   const output = document.getElementById('ipOutput');
@@ -53,6 +53,34 @@ Subnet Mask: ${maskParts.join('.')}
 Network Address: ${toIP(network)}
 Broadcast Address: ${toIP(broadcast)}
 Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
+  `;
+}
+
+// IPv6 Calculator (Basic CIDR Parsing)
+function calculateIPv6() {
+  const input = document.getElementById('ipv6Input').value.trim();
+  const output = document.getElementById('ipv6Output');
+
+  if (!input.includes('/')) {
+    output.textContent = 'Invalid format. Example: 2001:db8::/64';
+    return;
+  }
+
+  const [address, prefix] = input.split('/');
+  const cidr = parseInt(prefix);
+
+  // Simple regex for basic IPv6 format
+  const ipv6Pattern = /^([0-9a-fA-F]{1,4}:){2,7}[0-9a-fA-F]{1,4}?$/;
+
+  if (!ipv6Pattern.test(address) || isNaN(cidr) || cidr < 1 || cidr > 128) {
+    output.textContent = 'Invalid IPv6/CIDR format. Example: 2001:db8::/64';
+    return;
+  }
+
+  output.textContent = `
+IPv6 Address: ${address}
+Prefix Length: /${cidr}
+(This is a basic preview. Full IPv6 calculations require an advanced parser.)
   `;
 }
 
