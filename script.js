@@ -3,19 +3,19 @@ let filteredData = [];
 
 // Handle tab switching
 function showTab(tabId, event) {
-  const contents = document.querySelectorAll(".tab-content");
-  contents.forEach((section) => section.classList.remove("active"));
-
-  const buttons = document.querySelectorAll(".tabs button");
-  buttons.forEach((btn) => btn.classList.remove("active"));
-
+  document.querySelectorAll(".tab-content").forEach((section) =>
+    section.classList.remove("active")
+  );
+  document.querySelectorAll(".tabs button").forEach((btn) =>
+    btn.classList.remove("active")
+  );
   document.getElementById(tabId).classList.add("active");
   if (event && event.target) {
     event.target.classList.add("active");
   }
 }
 
-// IP Subnet Calculator (IPv4)
+// IPv4 Subnet Calculator
 function calculateSubnet() {
   const input = document.getElementById('ipInput').value.trim();
   const output = document.getElementById('ipOutput');
@@ -56,7 +56,7 @@ Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
   `;
 }
 
-// IPv6 Calculator (Basic CIDR Parsing)
+// IPv6 Calculator
 function calculateIPv6() {
   const input = document.getElementById('ipv6Input').value.trim();
   const output = document.getElementById('ipv6Output');
@@ -68,9 +68,7 @@ function calculateIPv6() {
 
   const [address, prefix] = input.split('/');
   const cidr = parseInt(prefix);
-
-  // Simple regex for basic IPv6 format
-  const ipv6Pattern = /^([0-9a-fA-F]{1,4}:){2,7}[0-9a-fA-F]{1,4}?$/;
+  const ipv6Pattern = /^[0-9a-fA-F:]{2,39}$/;
 
   if (!ipv6Pattern.test(address) || isNaN(cidr) || cidr < 1 || cidr > 128) {
     output.textContent = 'Invalid IPv6/CIDR format. Example: 2001:db8::/64';
@@ -84,7 +82,7 @@ Prefix Length: /${cidr}
   `;
 }
 
-// NSN List Loader
+// NSN JSON Loader
 function loadNSNs() {
   fetch('nsn-data.json')
     .then(res => res.json())
@@ -108,8 +106,9 @@ function loadNSNs() {
 // Display NSNs
 function displayNSNs(data) {
   const listContainer = document.getElementById('nsnList');
-  listContainer.innerHTML = '';
+  if (!listContainer) return;
 
+  listContainer.innerHTML = '';
   data.forEach(entry => {
     const div = document.createElement('div');
     div.className = 'nsn-item';
@@ -122,7 +121,7 @@ function displayNSNs(data) {
   });
 }
 
-// Filter NSNs
+// NSN Filter
 function filterNSNs() {
   const query = document.getElementById('nsnSearch').value.toLowerCase();
   const results = nsnData.filter(entry =>
@@ -133,14 +132,14 @@ function filterNSNs() {
   displayNSNs(results);
 }
 
-// Copy NSN to clipboard
+// NSN Clipboard Copy
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {
     alert(`Copied: ${text}`);
   });
 }
 
-// Export visible NSNs to CSV
+// Export NSNs to CSV
 function downloadCSV() {
   const csvRows = ['Item,NSN'];
   filteredData.forEach(entry => {
@@ -158,12 +157,8 @@ function downloadCSV() {
   a.click();
 }
 
-// On Page Load
-document.addEventListener('DOMContentLoaded', () => {
-  // Load NSN Data
-  loadNSNs();
-
-  // Compass Setup
+// Compass Functionality
+function setupCompass() {
   const needle = document.getElementById("needle");
   const degreeDisplay = document.getElementById("degreeDisplay");
   const startBtn = document.getElementById("startBtn");
@@ -175,14 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleOrientation(event) {
     let heading = event.webkitCompassHeading;
-
-    if (typeof heading === "undefined") {
-      heading = 360 - event.alpha;
-    }
-
-    if (typeof heading === "number" && !isNaN(heading)) {
-      rotateNeedle(heading);
-    }
+    if (typeof heading === "undefined") heading = 360 - event.alpha;
+    if (typeof heading === "number" && !isNaN(heading)) rotateNeedle(heading);
   }
 
   function startCompass() {
@@ -198,9 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Permission denied. Compass won't work.");
           }
         })
-        .catch((err) => {
-          console.error("Compass error:", err);
-        });
+        .catch((err) => console.error("Compass error:", err));
     } else {
       window.addEventListener("deviceorientationabsolute", handleOrientation, true);
     }
@@ -209,4 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (startBtn) {
     startBtn.addEventListener("click", startCompass);
   }
+}
+
+// On Page Load
+document.addEventListener('DOMContentLoaded', () => {
+  loadNSNs();
+  setupCompass();
 });
