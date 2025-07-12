@@ -192,6 +192,54 @@ function setupZuluClock() {
   updateTime();
   setInterval(updateTime, 1000);
 }
+// ==============================
+// SWITCH & ROUTER SIMULATION
+// ==============================
+function runSimulation() {
+  const port = document.getElementById("port")?.value || "";
+  const mode = document.getElementById("mode")?.value || "";
+  const vlan = parseInt(document.getElementById("vlan")?.value);
+  const ip = document.getElementById("ip")?.value || "";
+  const subnet = document.getElementById("subnet")?.value || "";
+  const gateway = document.getElementById("gateway")?.value || "";
+  const resultBox = document.getElementById("result");
+
+  let result = `Switch(config)# interface ${port}\n`;
+  result += `Switch(config-if)# switchport mode ${mode}\n`;
+
+  if (mode === "access") {
+    result += `Switch(config-if)# switchport access vlan ${vlan}\n`;
+  } else if (mode === "trunk") {
+    result += `Switch(config-if)# switchport trunk allowed vlan ${vlan}\n`;
+  }
+
+  result += `Switch(config-if)# no shutdown\n\n`;
+  result += `# Static IP Setup on Host Machine:\n`;
+  result += `IP Address: ${ip}\n`;
+  result += `Subnet Mask: ${subnet}\n`;
+  result += `Default Gateway: ${gateway}\n`;
+
+  // Simple validation
+  if (
+    !validateIP(ip) ||
+    !validateIP(subnet) ||
+    !validateIP(gateway) ||
+    isNaN(vlan) ||
+    vlan < 1 ||
+    vlan > 4094
+  ) {
+    result += `\n⚠️ Invalid input: Please ensure all fields are correctly filled.`;
+  } else {
+    result += `\n✅ Configuration looks valid.`;
+  }
+
+  if (resultBox) resultBox.textContent = result;
+}
+
+function validateIP(ip) {
+  return /^(\d{1,3}\.){3}\d{1,3}$/.test(ip);
+}
+
 
 // ==============================
 // DOM READY
