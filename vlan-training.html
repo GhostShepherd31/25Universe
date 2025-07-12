@@ -109,6 +109,7 @@
     <div id="result" class="result"></div>
   </div>
 
+  <!-- ✅ Corrected Back Link placed outside the script -->
   <a href="index.html" class="back-link">⬅ Back to Training</a>
 
   <script>
@@ -130,7 +131,7 @@
 
       if (mode === "access") {
         result += `Switch(config-if)# switchport access vlan ${vlan}\n`;
-      } else if (mode === "trunk") {
+      } else {
         result += `Switch(config-if)# switchport trunk allowed vlan ${vlan}\n`;
       }
 
@@ -157,24 +158,8 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      const btn = document.getElementById("simulateBtn");
-      if (btn) {
-        btn.addEventListener("click", runSimulation);
-      }
+      document.getElementById("simulateBtn").addEventListener("click", runSimulation);
     });
-
-    <a href="index.html"
-        style="position: fixed;
-          bottom: 20px;
-          left: 100px;
-          padding: 10px 15px; 
-          color: #fff; 
-          text-decoration: none;
-          border-radius: 5px;
-          background-color: #4caf50;">
-       ⬅ Back
-    </a>
-
   </script>
 </body>
 </html>
