@@ -6,7 +6,12 @@
   <title>Basic Cisco CLI Simulator</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    body { font-family: monospace; background: #111; color: #0f0; padding: 20px; }
+    body {
+      font-family: monospace;
+      background: #111;
+      color: #0f0;
+      padding: 20px;
+    }
     .cli-box {
       background: #000;
       padding: 20px;
@@ -59,10 +64,10 @@
     <div id="cliOutput" class="output"></div>
     <input id="cliInput" type="text" placeholder="Enter command..." autofocus />
 
-  <div style="margin-top: 10px; text-align: right;">
-    <button onclick="submitCommand()" style="background:#0f0; color:#000; padding:6px 14px; border:none; font-weight:bold; border-radius:5px; cursor:pointer;">Enter</button>
+    <div style="margin-top: 10px; text-align: right;">
+      <button onclick="submitCommand()" style="background:#0f0; color:#000; padding:6px 14px; border:none; font-weight:bold; border-radius:5px; cursor:pointer;">Enter</button>
+    </div>
   </div>
-</div>
 
   <div class="command-reference">
     <h3>🧠 Common Cisco CLI Commands</h3>
@@ -99,6 +104,10 @@
     </ul>
   </div>
 
+  <div style="max-width: 800px; margin: 20px auto;">
+    <a href="index.html" style="display: inline-block; padding: 10px 15px; background-color: #4caf50; color: #fff; text-decoration: none; border-radius: 5px;">⬅ Back</a>
+  </div>
+
   <script>
     const cliOutput = document.getElementById("cliOutput");
     const cliInput = document.getElementById("cliInput");
@@ -125,29 +134,20 @@ Gig0/1          unassigned      YES unset  administratively down down`,
       "?": "Supported commands: ping, show ip interface brief, enable, configure terminal, interface, ip address, no shutdown, exit"
     };
 
+    function submitCommand() {
+      const cmd = cliInput.value.trim().toLowerCase();
+      cliOutput.innerText += `\n> ${cmd}`;
+      const response = typeof responses[cmd] === "function" ? responses[cmd]() : responses[cmd] || "% Unrecognized command";
+      cliOutput.innerText += `\n${response}`;
+      cliOutput.scrollTop = cliOutput.scrollHeight;
+      cliInput.value = "";
+    }
+
     cliInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
-        const cmd = cliInput.value.trim().toLowerCase();
-        cliOutput.innerText += `\n> ${cmd}`;
-        const response = typeof responses[cmd] === "function" ? responses[cmd]() : responses[cmd] || "% Unrecognized command";
-        cliOutput.innerText += `\n${response}`;
-        cliOutput.scrollTop = cliOutput.scrollHeight;
-        cliInput.value = "";
+        submitCommand();
       }
     });
-
-    <!-- Back button -->
-    <a href="index.html"
-       style="display: inline-block;
-              margin-top: 20px;
-              padding: 10px 15px;
-              background-color: #4caf50;
-              color: #fff;
-              text-decoration: none;
-              border-radius: 5px;">
-       ⬅ Back
-    </a>
-  </div>
   </script>
 </body>
 </html>
