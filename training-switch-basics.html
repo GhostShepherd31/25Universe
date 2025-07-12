@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Switch & Router Basics Simulation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
   <style>
     body {
@@ -10,6 +11,11 @@
       background: #1e1e1e;
       color: #fff;
       padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     .sim-box {
@@ -26,7 +32,9 @@
       margin-top: 10px;
     }
 
-    .sim-box input, .sim-box select, .sim-box button {
+    .sim-box input,
+    .sim-box select,
+    .sim-box button {
       width: 100%;
       margin-top: 5px;
       padding: 8px;
@@ -51,11 +59,25 @@
       padding: 10px;
       border-radius: 5px;
       font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    a.back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #4caf50;
+      text-decoration: none;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <h1>🛠️ VLAN & IP Simulation</h1>
+
   <div class="sim-box">
     <label for="port">Select Port:</label>
     <select id="port">
@@ -82,13 +104,64 @@
     <label for="gateway">Default Gateway:</label>
     <input type="text" id="gateway" placeholder="e.g., 192.168.10.1" />
 
-    <button onclick="runSimulation()">Apply Settings</button>
+    <button id="simulateBtn">Apply Settings</button>
 
     <div id="result" class="result"></div>
   </div>
 
-  <a href="training.html" style="display: block; text-align: center; margin-top: 20px; color: #4caf50;">⬅ Back to Training</a>
+  <a href="training.html" class="back-link">⬅ Back to Training</a>
 
-  <script src="script.js"></script>
+  <script>
+    function validateIP(ip) {
+      return /^(\d{1,3}\.){3}\d{1,3}$/.test(ip);
+    }
+
+    function runSimulation() {
+      const port = document.getElementById("port").value;
+      const mode = document.getElementById("mode").value;
+      const vlan = parseInt(document.getElementById("vlan").value);
+      const ip = document.getElementById("ip").value;
+      const subnet = document.getElementById("subnet").value;
+      const gateway = document.getElementById("gateway").value;
+      const resultBox = document.getElementById("result");
+
+      let result = `Switch(config)# interface ${port}\n`;
+      result += `Switch(config-if)# switchport mode ${mode}\n`;
+
+      if (mode === "access") {
+        result += `Switch(config-if)# switchport access vlan ${vlan}\n`;
+      } else if (mode === "trunk") {
+        result += `Switch(config-if)# switchport trunk allowed vlan ${vlan}\n`;
+      }
+
+      result += `Switch(config-if)# no shutdown\n\n`;
+      result += `# Static IP Setup on Host Machine:\n`;
+      result += `IP Address: ${ip}\n`;
+      result += `Subnet Mask: ${subnet}\n`;
+      result += `Default Gateway: ${gateway}\n`;
+
+      if (
+        !validateIP(ip) ||
+        !validateIP(subnet) ||
+        !validateIP(gateway) ||
+        isNaN(vlan) ||
+        vlan < 1 ||
+        vlan > 4094
+      ) {
+        result += `\n⚠️ Invalid input: Please ensure all fields are correctly filled.`;
+      } else {
+        result += `\n✅ Configuration looks valid.`;
+      }
+
+      resultBox.textContent = result;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("simulateBtn");
+      if (btn) {
+        btn.addEventListener("click", runSimulation);
+      }
+    });
+  </script>
 </body>
 </html>
