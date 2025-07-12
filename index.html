@@ -65,7 +65,7 @@
     <section id="Satellite" class="tab-content">
       <div class="link-list">
         <a href="compass.html">Compass</a>
-        <a href="gps.html">GPS</a>  
+        <a href="gps.html">GPS</a>
       </div>
     </section>
 
@@ -88,7 +88,7 @@
       const now = new Date();
       const local = now.toLocaleTimeString('en-US', { hour12: false });
       const zulu = now.toUTCString().split(' ')[4];
-      document.getElementById('time-display').innerHTML = 
+      document.getElementById('time-display').innerHTML =
         `Local Time: ${local}<br>Zulu Time: ${zulu}Z`;
     }
 
