@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>25Universe – Signal Toolkit</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Clock styling */
+    .clock-container {
+      margin: 40px auto 0 auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #0f0;
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      font-family: monospace;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+      width: fit-content;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -62,11 +77,25 @@
     <!-- ✅ Clock Positioned Below All Tabs -->
     <div class="clock-container">
       <div id="time-display-local">Local Time: --:--:--</div>
-      <div id="time-display-zulu">Zulu Time: --:--:--Z</div>
+      <div id="time-display-zulu">Zulu Time: --:--:-- Z</div>
     </div>
   </div>
 
   <!-- ✅ Load main JavaScript file -->
   <script src="script.js"></script>
+
+  <!-- ✅ Inline Clock Logic -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const local = now.toLocaleTimeString('en-US', { hour12: false });
+      const zulu = now.toUTCString().split(' ')[4];
+      document.getElementById('time-display-local').textContent = Local Time: ${local};
+      document.getElementById('time-display-zulu').textContent = Zulu Time: ${zulu} Z;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 </body>
 </html>
