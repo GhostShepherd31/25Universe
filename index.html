@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Radio Programming Simulator – SC vs FH</title>
+  <title>Radio Troubleshooting Simulator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #1a1a1a;
-      color: #fff;
+      background: #121212;
+      color: white;
       padding: 2rem;
     }
 
     .container {
-      max-width: 550px;
+      max-width: 600px;
       margin: auto;
-      background: #2e2e2e;
-      padding: 1.5rem;
+      background: #1f1f1f;
+      padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 0 10px #0f0;
+      box-shadow: 0 0 10px lime;
     }
 
     label, input, select {
@@ -28,23 +28,23 @@
 
     input, select {
       padding: 0.5rem;
-      border: none;
       border-radius: 5px;
+      border: none;
     }
 
     button {
       padding: 0.5rem 1rem;
-      background: #4caf50;
-      color: #fff;
+      background-color: #4caf50;
+      color: white;
       border: none;
-      cursor: pointer;
       border-radius: 5px;
+      cursor: pointer;
     }
 
-    #output {
+    #output, #checklist {
       margin-top: 1.5rem;
       padding: 1rem;
-      background: #111;
+      background: #000;
       border-radius: 5px;
       font-family: monospace;
     }
@@ -52,109 +52,81 @@
     h1 {
       text-align: center;
       color: #4caf50;
-      margin-bottom: 2rem;
     }
 
-    .fh-only {
-      display: none;
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: lime;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Radio Programming Simulator</h1>
+    <h1>Radio Troubleshooting Simulator</h1>
 
-    <label for="radioType">Radio Type:</label>
-    <select id="radioType">
-      <option value="SINCGARS">SINCGARS</option>
-      <option value="AN/PRC">AN/PRC</option>
-    </select>
-
-    <label for="mode">Mode:</label>
-    <select id="mode" onchange="toggleFHFields()">
-      <option value="SC">Single Channel (SC)</option>
-      <option value="FH">Frequency Hopping (FH)</option>
-    </select>
-
-    <label for="frequency">Frequency (MHz):</label>
-    <input type="text" id="frequency" placeholder="e.g., 30.000" />
-
-    <label for="netID">Net ID:</label>
+    <label for="netID">Enter Net ID:</label>
     <input type="text" id="netID" placeholder="e.g., 101" />
 
-    <div class="fh-only">
-      <label for="tsk">TSK (Transmission Security Key):</label>
-      <input type="text" id="tsk" placeholder="e.g., TSK123" />
+    <label for="sync">Time Sync (HH:MM):</label>
+    <input type="time" id="sync" />
 
-      <label for="hopset">Hopset Name:</label>
-      <input type="text" id="hopset" placeholder="e.g., HOPNET01" />
-
-      <label for="timeSync">Time Sync (HH:MM):</label>
-      <input type="time" id="timeSync" />
-    </div>
-
-    <button onclick="programRadio()">Program Radio</button>
+    <button onclick="simulateError()">Simulate Error</button>
+    <button onclick="diagnose()">Run Diagnostics</button>
 
     <div id="output"></div>
+    <div id="checklist"></div>
   </div>
 
   <script>
-    function toggleFHFields() {
-      const mode = document.getElementById("mode").value;
-      const fhFields = document.querySelectorAll(".fh-only");
-      fhFields.forEach(field => {
-        field.style.display = mode === "FH" ? "block" : "none";
-      });
-    }
+    let simulatedErrors = {};
 
-    function programRadio() {
-      const radioType = document.getElementById("radioType").value;
-      const mode = document.getElementById("mode").value;
-      const frequency = document.getElementById("frequency").value.trim();
-      const netID = document.getElementById("netID").value.trim();
-      const output = document.getElementById("output");
+    function simulateError() {
+      simulatedErrors = {
+        antenna: Math.random() < 0.3,
+        battery: Math.random() < 0.3,
+        frequency: Math.random() < 0.3,
+        mode: Math.random() < 0.3,
+        key: Math.random() < 0.3,
+        sync: Math.random() < 0.3
+      };
 
-      const freqVal = parseFloat(frequency);
-      if (isNaN(freqVal) || freqVal < 30.000 || freqVal > 87.975) {
-        output.innerText = "Error: Frequency must be between 30.000 and 87.975 MHz.";
-        return;
-      }
-
-      if (!/^\d{1,3}$/.test(netID)) {
-        output.innerText = "Error: Net ID must be a number up to 3 digits.";
-        return;
-      }
-
-      let fhDetails = "";
-
-      if (mode === "FH") {
-        const tsk = document.getElementById("tsk").value.trim();
-        const hopset = document.getElementById("hopset").value.trim();
-        const timeSync = document.getElementById("timeSync").value;
-
-        if (!tsk || !hopset || !timeSync) {
-          output.innerText = "Error: FH Mode requires TSK, Hopset, and Time Sync.";
-          return;
-        }
-
-        fhDetails = `
-          TSK: ${tsk}<br>
-          Hopset: ${hopset}<br>
-          Time Sync: ${timeSync}<br>
-        `;
-      }
-
-      output.innerHTML = `
-        <strong>${radioType} Programmed Successfully in ${mode} Mode!</strong><br>
-        Frequency: ${frequency} MHz<br>
-        Net ID: ${netID}<br>
-        ${fhDetails}
-        Status: <span style="color:lime;">READY</span>
+      document.getElementById("output").innerHTML = `
+        🚨 Simulated error injected.<br>
+        Now run diagnostics to troubleshoot.
       `;
+      document.getElementById("checklist").innerHTML = "";
     }
 
-    // Ensure FH fields reflect mode on load
-    window.onload = toggleFHFields;
+    function diagnose() {
+      const netID = document.getElementById("netID").value.trim();
+      const syncTime = document.getElementById("sync").value;
+      let checklist = "";
+      let hasError = false;
+
+      const userInputs = {
+        antenna: true, // always assumed connected unless simulated error
+        battery: true,
+        frequency: /^\d{2,3}$/.test(netID),
+        mode: true,
+        key: true,
+        sync: !!syncTime
+      };
+
+      for (const [item, isError] of Object.entries(simulatedErrors)) {
+        const userStatus = userInputs[item];
+        const passed = !isError || (isError && !userStatus);
+        checklist += `${item.toUpperCase()}: ${passed ? "✅" : "❌"}<br>`;
+        if (!passed) hasError = true;
+      }
+
+      document.getElementById("checklist").innerHTML = checklist;
+      document.getElementById("output").innerHTML = hasError
+        ? `<span class="error">Errors detected! Fix the red ❌ items above.</span>`
+        : `<span class="success">All systems normal. Radio is READY.</span>`;
+    }
   </script>
 </body>
 </html>
