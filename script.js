@@ -173,18 +173,31 @@ function setupCompass() {
 }
 
 // ==============================
-// ZULU CLOCK
+// ZULU & LOCAL CLOCK
 // ==============================
 function setupZuluClock() {
-  const display = document.getElementById("time-display-zulu");
-  if (!display) return;
+  const zuluDisplay = document.getElementById("time-display-zulu");
+  const localDisplay = document.getElementById("time-display-local");
+  if (!zuluDisplay || !localDisplay) return;
 
   function updateTime() {
     const now = new Date();
-    const utcHours = String(now.getUTCHours()).padStart(2, "0");
-    const utcMinutes = String(now.getUTCMinutes()).padStart(2, "0");
-    const utcSeconds = String(now.getUTCSeconds()).padStart(2, "0");
-    display.textContent = `${utcHours}:${utcMinutes}:${utcSeconds} Z`;
+
+    // Zulu Time
+    const zuluHours = String(now.getUTCHours()).padStart(2, "0");
+    const zuluMinutes = String(now.getUTCMinutes()).padStart(2, "0");
+    const zuluSeconds = String(now.getUTCSeconds()).padStart(2, "0");
+    zuluDisplay.textContent = `${zuluHours}:${zuluMinutes}:${zuluSeconds} Z`;
+
+    // Local Time
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+      timeZoneName: 'short'
+    };
+    localDisplay.textContent = new Intl.DateTimeFormat('en-US', options).format(now);
   }
 
   updateTime();
