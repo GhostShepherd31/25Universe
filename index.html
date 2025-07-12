@@ -6,8 +6,9 @@
   <title>25Universe – Signal Toolkit</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Clock styling */
     .clock-container {
-      margin: 20px auto;
+      margin: 40px auto 0 auto;
       background-color: rgba(0, 0, 0, 0.8);
       color: #0f0;
       padding: 12px 25px;
@@ -33,12 +34,6 @@
       <button onclick="showTab('Automations', event)">Automations</button>
       <button onclick="showTab('Training', event)">Training</button>
     </nav>
-
-    <!-- ✅ Clock Display Centered Under Tabs -->
-    <div class="clock-container">
-      <div id="time-display-local">Local Time: --:--:--</div>
-      <div id="time-display-zulu">Zulu Time: --:--:-- Z</div>
-    </div>
 
     <!-- Tab Content Sections -->
     <section id="Network" class="tab-content active">
@@ -79,6 +74,12 @@
         <a href="training.html">Training</a>
       </div>
     </section>
+
+    <!-- ✅ Clock Positioned Below All Tabs -->
+    <div class="clock-container">
+      <div id="time-display-local">Local Time: --:--:--</div>
+      <div id="time-display-zulu">Zulu Time: --:--:-- Z</div>
+    </div>
   </div>
 
   <script src="script.js"></script>
