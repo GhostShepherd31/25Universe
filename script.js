@@ -212,7 +212,7 @@ function setupZuluClock() {
     const zuluHours = String(now.getUTCHours()).padStart(2, "0");
     const zuluMinutes = String(now.getUTCMinutes()).padStart(2, "0");
     const zuluSeconds = String(now.getUTCSeconds()).padStart(2, "0");
-    zuluDisplay.textContent = `${zuluHours}:${zuluMinutes}:${zuluSeconds} Z`;
+    zuluDisplay.textContent = `${zuluHours}:${zuluMinutes}:${zuluSeconds}Z`;
 
     // Local Time
     const options = {
