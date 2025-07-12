@@ -81,19 +81,17 @@
     </div>
   </div>
 
-  <!-- ✅ Load main JavaScript -->
+  <!-- ✅ Load main JavaScript file -->
   <script src="script.js"></script>
-</body>
-</html>
 
-  <script src="script.js"></script>
+  <!-- ✅ Inline Clock Logic -->
   <script>
     function updateClock() {
       const now = new Date();
       const local = now.toLocaleTimeString('en-US', { hour12: false });
       const zulu = now.toUTCString().split(' ')[4];
       document.getElementById('time-display-local').textContent = `Local Time: ${local}`;
-      document.getElementById('time-display-zulu').textContent = `Zulu Time: ${zulu}Z`;
+      document.getElementById('time-display-zulu').textContent = `Zulu Time: ${zulu} Z`;
     }
 
     setInterval(updateClock, 1000);
