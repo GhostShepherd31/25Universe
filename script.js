@@ -1,7 +1,12 @@
+// ==============================
+// GLOBAL VARIABLES
+// ==============================
 let nsnData = [];
 let filteredData = [];
 
-// Handle tab switching
+// ==============================
+// TAB SWITCHING
+// ==============================
 function showTab(tabId, event) {
   document.querySelectorAll(".tab-content").forEach((section) =>
     section.classList.remove("active")
@@ -10,12 +15,14 @@ function showTab(tabId, event) {
     btn.classList.remove("active")
   );
   document.getElementById(tabId).classList.add("active");
-  if (event && event.target) {
+  if (event?.target) {
     event.target.classList.add("active");
   }
 }
 
-// IPv4 Subnet Calculator
+// ==============================
+// IPv4 SUBNET CALCULATOR
+// ==============================
 function calculateSubnet() {
   const input = document.getElementById('ipInput').value.trim();
   const output = document.getElementById('ipOutput');
@@ -56,7 +63,9 @@ Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
   `;
 }
 
-// NSN JSON Loader
+// ==============================
+// NSN FUNCTIONS
+// ==============================
 function loadNSNs() {
   fetch('nsn-data.json')
     .then(res => res.json())
@@ -77,11 +86,9 @@ function loadNSNs() {
     });
 }
 
-// Display NSNs
 function displayNSNs(data) {
   const listContainer = document.getElementById('nsnList');
   if (!listContainer) return;
-
   listContainer.innerHTML = '';
   data.forEach(entry => {
     const div = document.createElement('div');
@@ -95,25 +102,21 @@ function displayNSNs(data) {
   });
 }
 
-// NSN Filter
 function filterNSNs() {
   const query = document.getElementById('nsnSearch').value.toLowerCase();
-  const results = nsnData.filter(entry =>
+  filteredData = nsnData.filter(entry =>
     entry.item.toLowerCase().includes(query) ||
     entry.nsn.toLowerCase().includes(query)
   );
-  filteredData = results;
-  displayNSNs(results);
+  displayNSNs(filteredData);
 }
 
-// NSN Clipboard Copy
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {
     alert(`Copied: ${text}`);
   });
 }
 
-// Export NSNs to CSV
 function downloadCSV() {
   const csvRows = ['Item,NSN'];
   filteredData.forEach(entry => {
@@ -124,14 +127,15 @@ function downloadCSV() {
   const csvContent = csvRows.join('\n');
   const blob = new Blob([csvContent], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
-
   const a = document.createElement('a');
   a.href = url;
   a.download = 'nsn-export.csv';
   a.click();
 }
 
-// Compass Functionality
+// ==============================
+// COMPASS FUNCTIONALITY
+// ==============================
 function setupCompass() {
   const needle = document.getElementById("needle");
   const degreeDisplay = document.getElementById("degreeDisplay");
@@ -143,22 +147,20 @@ function setupCompass() {
   }
 
   function handleOrientation(event) {
-    let heading = event.webkitCompassHeading;
-    if (typeof heading === "undefined") heading = 360 - event.alpha;
-    if (typeof heading === "number" && !isNaN(heading)) rotateNeedle(heading);
+    let heading = event.webkitCompassHeading ?? (360 - event.alpha);
+    if (typeof heading === "number" && !isNaN(heading)) {
+      rotateNeedle(heading);
+    }
   }
 
   function startCompass() {
-    if (
-      typeof DeviceOrientationEvent !== "undefined" &&
-      typeof DeviceOrientationEvent.requestPermission === "function"
-    ) {
+    if (DeviceOrientationEvent?.requestPermission) {
       DeviceOrientationEvent.requestPermission()
-        .then((permissionState) => {
-          if (permissionState === "granted") {
+        .then((state) => {
+          if (state === "granted") {
             window.addEventListener("deviceorientation", handleOrientation, true);
           } else {
-            alert("Permission denied. Compass won't work.");
+            alert("Permission denied.");
           }
         })
         .catch((err) => console.error("Compass error:", err));
@@ -172,43 +174,30 @@ function setupCompass() {
   }
 }
 
-// On Page Load
+// ==============================
+// ZULU CLOCK
+// ==============================
+function setupZuluClock() {
+  const display = document.getElementById("time-display");
+  if (!display) return;
+
+  function updateTime() {
+    const now = new Date();
+    const utcHours = String(now.getUTCHours()).padStart(2, "0");
+    const utcMinutes = String(now.getUTCMinutes()).padStart(2, "0");
+    const utcSeconds = String(now.getUTCSeconds()).padStart(2, "0");
+    display.textContent = `${utcHours}:${utcMinutes}:${utcSeconds} Z`;
+  }
+
+  updateTime();
+  setInterval(updateTime, 1000);
+}
+
+// ==============================
+// DOM READY
+// ==============================
 document.addEventListener('DOMContentLoaded', () => {
   loadNSNs();
   setupCompass();
-
-  // Safe IPv6 calculation binding after Address6 is loaded
-  const ipv6Button = document.querySelector('button[onclick="calculateIPv6()"]');
-  if (ipv6Button) {
-    ipv6Button.addEventListener('click', () => {
-      const input = document.getElementById('ipv6Input').value.trim();
-      const output = document.getElementById('ipv6Output');
-
-      if (!input.includes('/')) {
-        output.textContent = 'Invalid format. Example: 2001:db8::/64';
-        return;
-      }
-
-      try {
-        const address = new Address6(input);
-
-        if (!address.isValid()) {
-          output.textContent = 'Invalid IPv6 address.';
-          return;
-        }
-
-        output.innerHTML = `
-IPv6 Address: ${address.correctForm()}<br>
-Canonical Form: ${address.canonicalForm()}<br>
-Big Integer: ${address.bigInteger().toString()}<br>
-Prefix Length: /${address.subnetMask}<br>
-Start: ${address.startAddress().correctForm()}<br>
-End: ${address.endAddress().correctForm()}<br>
-Possible Hosts: ${address.possibleAddresses()}<br>
-        `;
-      } catch (err) {
-        output.textContent = 'Error parsing IPv6: ' + err.message;
-      }
-    });
-  }
+  setupZuluClock();
 });
