@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Radio Programming Simulator – 25Universe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #2e2e2e;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    label, input, select {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    input, select {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background: #4caf50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #output {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #111;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4caf50;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Radio Programming Simulator</h1>
+
+    <label for="radioType">Radio Type:</label>
+    <select id="radioType">
+      <option value="SINCGARS">SINCGARS</option>
+      <option value="AN/PRC">AN/PRC</option>
+    </select>
+
+    <label for="frequency">Frequency (MHz):</label>
+    <input type="text" id="frequency" placeholder="e.g., 30.000" />
+
+    <label for="netID">Net ID:</label>
+    <input type="text" id="netID" placeholder="e.g., 101" />
+
+    <label for="timeSync">Time Sync (HH:MM):</label>
+    <input type="time" id="timeSync" />
+
+    <button onclick="programRadio()">Program Radio</button>
+
+    <div id="output"></div>
+  </div>
+
+  <script>
+    function programRadio() {
+      const radioType = document.getElementById("radioType").value;
+      const frequency = document.getElementById("frequency").value.trim();
+      const netID = document.getElementById("netID").value.trim();
+      const timeSync = document.getElementById("timeSync").value;
+      const output = document.getElementById("output");
+
+      const freqVal = parseFloat(frequency);
+      if (isNaN(freqVal) || freqVal < 30.000 || freqVal > 87.975) {
+        output.innerText = "Error: Frequency must be between 30.000 and 87.975 MHz.";
+        return;
+      }
+
+      if (!/^\d{1,3}$/.test(netID)) {
+        output.innerText = "Error: Net ID must be a number up to 3 digits.";
+        return;
+      }
+
+      if (!timeSync) {
+        output.innerText = "Error: Please enter a time for time sync.";
+        return;
+      }
+
+      output.innerHTML = `
+        <strong>${radioType} Programmed Successfully!</strong><br>
+        Frequency: ${frequency} MHz<br>
+        Net ID: ${netID}<br>
+        Time Sync: ${timeSync}<br>
+        Status: <span style="color:lime;">READY</span>
+      `;
+    }
+  </script>
+</body>
+</html>
