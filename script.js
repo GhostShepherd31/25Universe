@@ -61,6 +61,31 @@ Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
 }
 
 // ==============================
+// IPV6 SUBNET CALCULATOR
+// ==============================
+function calculateIPv6() {
+  const input = document.getElementById("ipv6Input").value.trim();
+  const output = document.getElementById("ipv6Output");
+
+  // Validate format
+  const ipv6CIDRPattern = /^([a-fA-F0-9:]+)\/(\d{1,3})$/;
+  const match = input.match(ipv6CIDRPattern);
+
+  if (!match) {
+    output.textContent = "⚠️ Invalid IPv6 format. Use format like 2001:db8::/64";
+    return;
+  }
+
+  const [_, address, prefix] = match;
+  output.textContent =
+    `🔹 IPv6 Address: ${address}\n` +
+    `🔹 Prefix Length: /${prefix}\n` +
+    `🔹 Network Range: ${address}/${prefix}\n\n` +
+    `✅ Note: This calculator currently validates format and extracts basic info. ` +
+    `Advanced subnet breakdown will be added in a future update.`;
+}
+
+// ==============================
 // NSN FUNCTIONS
 // ==============================
 function loadNSNs() {
