@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Switch & Router Basics Simulation</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .sim-box {
+      border: 1px solid #4caf50;
+      border-radius: 10px;
+      padding: 20px;
+      background: #2e2e2e;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .sim-box label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .sim-box input, .sim-box select, .sim-box button {
+      width: 100%;
+      margin-top: 5px;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .sim-box button {
+      background: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    .sim-box button:hover {
+      background: #45a049;
+    }
+
+    .result {
+      margin-top: 15px;
+      background: #000;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛠️ VLAN & IP Simulation</h1>
+  <div class="sim-box">
+    <label for="port">Select Port:</label>
+    <select id="port">
+      <option value="fa0/1">Fa0/1</option>
+      <option value="fa0/2">Fa0/2</option>
+      <option value="fa0/3">Fa0/3</option>
+    </select>
+
+    <label for="mode">Port Mode:</label>
+    <select id="mode">
+      <option value="access">Access</option>
+      <option value="trunk">Trunk</option>
+    </select>
+
+    <label for="vlan">VLAN ID:</label>
+    <input type="number" id="vlan" min="1" max="4094" placeholder="e.g., 10" />
+
+    <label for="ip">Static IP:</label>
+    <input type="text" id="ip" placeholder="e.g., 192.168.10.5" />
+
+    <label for="subnet">Subnet Mask:</label>
+    <input type="text" id="subnet" placeholder="e.g., 255.255.255.0" />
+
+    <label for="gateway">Default Gateway:</label>
+    <input type="text" id="gateway" placeholder="e.g., 192.168.10.1" />
+
+    <button onclick="runSimulation()">Apply Settings</button>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <a href="training.html" style="display: block; text-align: center; margin-top: 20px; color: #4caf50;">⬅ Back to Training</a>
+
+  <script src="sim-switch.js"></script>
+</body>
+</html>
