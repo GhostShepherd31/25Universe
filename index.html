@@ -6,9 +6,8 @@
   <title>25Universe – Signal Toolkit</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Zulu clock styling */
-    #time-display {
-      margin: 10px auto 20px auto;
+    .clock-container {
+      margin: 20px auto;
       background-color: rgba(0, 0, 0, 0.8);
       color: #0f0;
       padding: 12px 25px;
@@ -25,12 +24,6 @@
   <div class="container">
     <h1>25Universe – Signal Toolkit</h1>
 
-    <!-- ✅ Always-visible Zulu Clock -->
-    <div id="time-display">
-      Local Time: --:--:--<br>
-      Zulu Time: --:--:--Z
-    </div>
-
     <!-- Main Tab Navigation -->
     <nav class="tabs">
       <button onclick="showTab('Network', event)" class="active">Network</button>
@@ -40,6 +33,12 @@
       <button onclick="showTab('Automations', event)">Automations</button>
       <button onclick="showTab('Training', event)">Training</button>
     </nav>
+
+    <!-- ✅ Clock Display Centered Under Tabs -->
+    <div class="clock-container">
+      <div id="time-display-local">Local Time: --:--:--</div>
+      <div id="time-display-zulu">Zulu Time: --:--:-- Z</div>
+    </div>
 
     <!-- Tab Content Sections -->
     <section id="Network" class="tab-content active">
@@ -88,8 +87,8 @@
       const now = new Date();
       const local = now.toLocaleTimeString('en-US', { hour12: false });
       const zulu = now.toUTCString().split(' ')[4];
-      document.getElementById('time-display').innerHTML =
-        `Local Time: ${local}<br>Zulu Time: ${zulu}Z`;
+      document.getElementById('time-display-local').textContent = `Local Time: ${local}`;
+      document.getElementById('time-display-zulu').textContent = `Zulu Time: ${zulu} Z`;
     }
 
     setInterval(updateClock, 1000);
