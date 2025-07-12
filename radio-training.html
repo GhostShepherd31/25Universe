@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Radio Programming Simulator – 25Universe</title>
+  <title>Interactive Radio Troubleshooting Simulator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #1a1a1a;
-      color: #fff;
+      background: #121212;
+      color: white;
       padding: 2rem;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 650px;
       margin: auto;
-      background: #2e2e2e;
-      padding: 1.5rem;
+      background: #1f1f1f;
+      padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 0 10px #0f0;
+      box-shadow: 0 0 10px lime;
     }
 
     label, input, select {
@@ -26,91 +26,150 @@
       margin-bottom: 1rem;
     }
 
-    input, select {
+    input, select, button {
       padding: 0.5rem;
-      border: none;
       border-radius: 5px;
+      border: none;
+      margin-bottom: 1rem;
     }
 
     button {
-      padding: 0.5rem 1rem;
-      background: #4caf50;
-      color: #fff;
-      border: none;
+      background-color: #4caf50;
+      color: white;
       cursor: pointer;
-      border-radius: 5px;
     }
 
-    #output {
-      margin-top: 1.5rem;
+    #output, #checklist, #hints {
+      margin-top: 1rem;
       padding: 1rem;
-      background: #111;
+      background: #000;
       border-radius: 5px;
       font-family: monospace;
     }
 
-    h1 {
-      text-align: center;
-      color: #4caf50;
-      margin-bottom: 2rem;
-    }
+    .error { color: red; }
+    .success { color: lime; }
+    .btn-panel { display: flex; flex-wrap: wrap; gap: 10px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Radio Programming Simulator</h1>
+    <h1>Radio Troubleshooting Simulator</h1>
 
-    <label for="radioType">Radio Type:</label>
-    <select id="radioType">
-      <option value="SINCGARS">SINCGARS</option>
-      <option value="AN/PRC">AN/PRC</option>
+    <label for="netID">Net ID (2–3 digits):</label>
+    <input type="text" id="netID" />
+
+    <label for="sync">Time Sync (HH:MM):</label>
+    <input type="time" id="sync" />
+
+    <label for="comsec">COMSEC Key:</label>
+    <select id="comsec">
+      <option value="">--Select Key--</option>
+      <option value="TSK01">TSK01</option>
+      <option value="TSK99">TSK99</option>
     </select>
+    <button onclick="loadKey()">Load Key</button>
 
-    <label for="frequency">Frequency (MHz):</label>
-    <input type="text" id="frequency" placeholder="e.g., 30.000" />
+    <button onclick="simulateError()">Simulate Error</button>
+    <button onclick="diagnose()">Run Diagnostics</button>
 
-    <label for="netID">Net ID:</label>
-    <input type="text" id="netID" placeholder="e.g., 101" />
-
-    <label for="timeSync">Time Sync (HH:MM):</label>
-    <input type="time" id="timeSync" />
-
-    <button onclick="programRadio()">Program Radio</button>
+    <div class="btn-panel">
+      <button onclick="fix('antenna')">Fix Antenna</button>
+      <button onclick="fix('battery')">Replace Battery</button>
+      <button onclick="fix('mode')">Set Mode</button>
+      <button onclick="fix('sync')">Sync Time</button>
+      <button onclick="fix('frequency')">Validate Freq</button>
+    </div>
 
     <div id="output"></div>
+    <div id="checklist"></div>
+    <div id="hints"></div>
   </div>
 
   <script>
-    function programRadio() {
-      const radioType = document.getElementById("radioType").value;
-      const frequency = document.getElementById("frequency").value.trim();
+    let simulatedErrors = {};
+    let keyLoaded = false;
+    let retries = 0;
+    const maxRetries = 3;
+
+    function simulateError() {
+      if (retries >= maxRetries) return;
+
+      simulatedErrors = {
+        antenna: Math.random() < 0.4,
+        battery: Math.random() < 0.4,
+        frequency: Math.random() < 0.4,
+        mode: Math.random() < 0.4,
+        key: Math.random() < 0.4,
+        sync: Math.random() < 0.4
+      };
+
+      keyLoaded = false;
+      retries = 0;
+
+      document.getElementById("output").innerHTML = `🚨 Simulated errors injected. Try to fix them.`;
+      document.getElementById("checklist").innerHTML = "";
+      document.getElementById("hints").innerHTML = "";
+    }
+
+    function diagnose() {
+      if (retries >= maxRetries) {
+        document.getElementById("output").innerHTML = `<span class="error">🔒 Simulation locked. Too many failed attempts.</span>`;
+        return;
+      }
+
       const netID = document.getElementById("netID").value.trim();
-      const timeSync = document.getElementById("timeSync").value;
-      const output = document.getElementById("output");
+      const syncTime = document.getElementById("sync").value;
+      const userInputs = {
+        antenna: !simulatedErrors.antenna,
+        battery: !simulatedErrors.battery,
+        frequency: /^\d{2,3}$/.test(netID),
+        mode: !simulatedErrors.mode,
+        key: keyLoaded,
+        sync: !!syncTime || !simulatedErrors.sync
+      };
 
-      const freqVal = parseFloat(frequency);
-      if (isNaN(freqVal) || freqVal < 30.000 || freqVal > 87.975) {
-        output.innerText = "Error: Frequency must be between 30.000 and 87.975 MHz.";
-        return;
+      let checklist = "";
+      let hasError = false;
+
+      for (const [item, expectedOK] of Object.entries(simulatedErrors)) {
+        const userOK = userInputs[item];
+        const passed = !expectedOK || (expectedOK && userOK);
+        checklist += `${item.toUpperCase()}: ${passed ? "✅" : "❌"}<br>`;
+        if (!passed) hasError = true;
       }
 
-      if (!/^\d{1,3}$/.test(netID)) {
-        output.innerText = "Error: Net ID must be a number up to 3 digits.";
-        return;
-      }
+      document.getElementById("checklist").innerHTML = checklist;
 
-      if (!timeSync) {
-        output.innerText = "Error: Please enter a time for time sync.";
-        return;
+      if (hasError) {
+        retries++;
+        let msg = `<span class="error">❌ Issues still present. Attempt ${retries} of ${maxRetries}.</span>`;
+        if (retries === 2) {
+          document.getElementById("hints").innerHTML = `🧠 Hint: Double-check COMSEC load, time sync, and frequency format.`;
+        }
+        if (retries >= maxRetries) {
+          msg = `<span class="error">🔒 Simulation locked. Too many failed attempts.</span>`;
+        }
+        document.getElementById("output").innerHTML = msg;
+      } else {
+        document.getElementById("output").innerHTML = `<span class="success">✅ All systems ready. Simulation passed!</span>`;
+        document.getElementById("hints").innerHTML = "";
       }
+    }
 
-      output.innerHTML = `
-        <strong>${radioType} Programmed Successfully!</strong><br>
-        Frequency: ${frequency} MHz<br>
-        Net ID: ${netID}<br>
-        Time Sync: ${timeSync}<br>
-        Status: <span style="color:lime;">READY</span>
-      `;
+    function fix(component) {
+      simulatedErrors[component] = false;
+      document.getElementById("output").innerText = `🔧 ${component.toUpperCase()} fixed. Rerun diagnostics.`;
+    }
+
+    function loadKey() {
+      const key = document.getElementById("comsec").value;
+      if (key === "TSK01") {
+        keyLoaded = true;
+        document.getElementById("output").innerText = "🔐 COMSEC Key loaded successfully.";
+      } else {
+        document.getElementById("output").innerText = "❌ Invalid COMSEC Key.";
+      }
     }
   </script>
 </body>
