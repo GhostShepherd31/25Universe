@@ -1,23 +1,32 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Radio Troubleshooting Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>25Universe – Signal Toolkit</title>
+  <link rel="stylesheet" href="styles.css" />
+  <title>Radio Programming Simulator – SC vs FH</title>
   <style>
+    /* Clock styling */
+    .clock-container {
+      margin: 40px auto 0 auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #0f0;
+      padding: 12px 25px;
+      font-size: 1.2rem;
     body {
       font-family: Arial, sans-serif;
-      background: #121212;
-      color: white;
+      background: #1a1a1a;
+      color: #fff;
       padding: 2rem;
     }
 
     .container {
-      max-width: 600px;
+      max-width: 550px;
       margin: auto;
-      background: #1f1f1f;
-      padding: 2rem;
+      background: #2e2e2e;
+      padding: 1.5rem;
       border-radius: 10px;
-      box-shadow: 0 0 10px lime;
+      box-shadow: 0 0 10px #0f0;
     }
 
     label, input, select {
@@ -28,105 +37,187 @@
 
     input, select {
       padding: 0.5rem;
-      border-radius: 5px;
       border: none;
+      border-radius: 5px;
     }
 
     button {
       padding: 0.5rem 1rem;
-      background-color: #4caf50;
-      color: white;
+      background: #4caf50;
+      color: #fff;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
+      border-radius: 5px;
     }
 
-    #output, #checklist {
+    #output {
       margin-top: 1.5rem;
       padding: 1rem;
-      background: #000;
+      background: #111;
       border-radius: 5px;
       font-family: monospace;
     }
 
     h1 {
       text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+      width: fit-content;
       color: #4caf50;
+      margin-bottom: 2rem;
     }
 
-    .error {
-      color: red;
-    }
-
-    .success {
-      color: lime;
+    .fh-only {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Radio Troubleshooting Simulator</h1>
+    <h1>25Universe – Signal Toolkit</h1>
 
-    <label for="netID">Enter Net ID:</label>
+    <!-- Main Tab Navigation -->
+    <nav class="tabs">
+      <button onclick="showTab('Tools', event)" class="active">Tools</button>
+      <button onclick="showTab('Maintenance', event)">Maintenance</button>
+      <button onclick="showTab('Training', event)">Training</button>
+    </nav>
+
+    <!-- Tab Content Sections -->
+    <section id="Tools" class="tab-content active">
+      <div class="link-list">
+        <a href="ip-calculator.html">IP Calculator</a>
+        <a href="compass.html">Compass</a>
+        <a href="gps.html">GPS</a>
+      </div>
+    </section>
+
+
+    <section id="Maintenance" class="tab-content">
+      <div class="link-list">
+        <a href="maintenance-nsn.html">NSN's</a>
+        <a href="technical-manuals.html">Technical Manuals</a>
+      </div>
+    </section>
+
+    <section id="Training" class="tab-content">
+      <div class="link-list">
+        <a href="cable-cat5.html">CAT5 Training</a>
+        <a href="vlan-training.html">VLAN Training</a>
+        <a href="cisco-cli.html">CISCO Simulator</a>
+        <a href="radio-training.html">Radio Training</a>
+      </div>
+    </section>
+
+    <!-- ✅ Clock Positioned Below All Tabs -->
+    <div class="clock-container">
+      <div id="time-display-local">Local Time: --:--:--</div>
+      <div id="time-display-zulu">Zulu Time: --:--:--Z</div>
+    <h1>Radio Programming Simulator</h1>
+
+    <label for="radioType">Radio Type:</label>
+    <select id="radioType">
+      <option value="SINCGARS">SINCGARS</option>
+      <option value="AN/PRC">AN/PRC</option>
+    </select>
+
+    <label for="mode">Mode:</label>
+    <select id="mode" onchange="toggleFHFields()">
+      <option value="SC">Single Channel (SC)</option>
+      <option value="FH">Frequency Hopping (FH)</option>
+    </select>
+
+    <label for="frequency">Frequency (MHz):</label>
+    <input type="text" id="frequency" placeholder="e.g., 30.000" />
+
+    <label for="netID">Net ID:</label>
     <input type="text" id="netID" placeholder="e.g., 101" />
 
-    <label for="sync">Time Sync (HH:MM):</label>
-    <input type="time" id="sync" />
+    <div class="fh-only">
+      <label for="tsk">TSK (Transmission Security Key):</label>
+      <input type="text" id="tsk" placeholder="e.g., TSK123" />
 
-    <button onclick="simulateError()">Simulate Error</button>
-    <button onclick="diagnose()">Run Diagnostics</button>
+      <label for="hopset">Hopset Name:</label>
+      <input type="text" id="hopset" placeholder="e.g., HOPNET01" />
 
-    <div id="output"></div>
-    <div id="checklist"></div>
+      <label for="timeSync">Time Sync (HH:MM):</label>
+      <input type="time" id="timeSync" />
+    </div>
   </div>
 
+  <!-- ✅ Load main JavaScript file -->
+  <script src="script.js"></script>
+    <button onclick="programRadio()">Program Radio</button>
+
+    <div id="output"></div>
+  </div>
+
+  <!-- ✅ Inline Clock Logic -->
   <script>
-    let simulatedErrors = {};
-
-    function simulateError() {
-      simulatedErrors = {
-        antenna: Math.random() < 0.3,
-        battery: Math.random() < 0.3,
-        frequency: Math.random() < 0.3,
-        mode: Math.random() < 0.3,
-        key: Math.random() < 0.3,
-        sync: Math.random() < 0.3
-      };
-
-      document.getElementById("output").innerHTML = `
-        🚨 Simulated error injected.<br>
-        Now run diagnostics to troubleshoot.
-      `;
-      document.getElementById("checklist").innerHTML = "";
+    function updateClock() {
+      const now = new Date();
+      const local = now.toLocaleTimeString('en-US', { hour12: false });
+      const zulu = now.toUTCString().split(' ')[4];
+      document.getElementById('time-display-local').textContent = Local Time: ${local};
+      document.getElementById('time-display-zulu').textContent = Zulu Time: ${zulu}Z;
+    function toggleFHFields() {
+      const mode = document.getElementById("mode").value;
+      const fhFields = document.querySelectorAll(".fh-only");
+      fhFields.forEach(field => {
+        field.style.display = mode === "FH" ? "block" : "none";
+      });
     }
 
-    function diagnose() {
+    function programRadio() {
+      const radioType = document.getElementById("radioType").value;
+      const mode = document.getElementById("mode").value;
+      const frequency = document.getElementById("frequency").value.trim();
       const netID = document.getElementById("netID").value.trim();
-      const syncTime = document.getElementById("sync").value;
-      let checklist = "";
-      let hasError = false;
+      const output = document.getElementById("output");
 
-      const userInputs = {
-        antenna: true, // always assumed connected unless simulated error
-        battery: true,
-        frequency: /^\d{2,3}$/.test(netID),
-        mode: true,
-        key: true,
-        sync: !!syncTime
-      };
-
-      for (const [item, isError] of Object.entries(simulatedErrors)) {
-        const userStatus = userInputs[item];
-        const passed = !isError || (isError && !userStatus);
-        checklist += `${item.toUpperCase()}: ${passed ? "✅" : "❌"}<br>`;
-        if (!passed) hasError = true;
+      const freqVal = parseFloat(frequency);
+      if (isNaN(freqVal) || freqVal < 30.000 || freqVal > 87.975) {
+        output.innerText = "Error: Frequency must be between 30.000 and 87.975 MHz.";
+        return;
       }
 
-      document.getElementById("checklist").innerHTML = checklist;
-      document.getElementById("output").innerHTML = hasError
-        ? `<span class="error">Errors detected! Fix the red ❌ items above.</span>`
-        : `<span class="success">All systems normal. Radio is READY.</span>`;
+      if (!/^\d{1,3}$/.test(netID)) {
+        output.innerText = "Error: Net ID must be a number up to 3 digits.";
+        return;
+      }
+
+      let fhDetails = "";
+
+      if (mode === "FH") {
+        const tsk = document.getElementById("tsk").value.trim();
+        const hopset = document.getElementById("hopset").value.trim();
+        const timeSync = document.getElementById("timeSync").value;
+
+        if (!tsk || !hopset || !timeSync) {
+          output.innerText = "Error: FH Mode requires TSK, Hopset, and Time Sync.";
+          return;
+        }
+
+        fhDetails = `
+          TSK: ${tsk}<br>
+          Hopset: ${hopset}<br>
+          Time Sync: ${timeSync}<br>
+        `;
+      }
+
+      output.innerHTML = `
+        <strong>${radioType} Programmed Successfully in ${mode} Mode!</strong><br>
+        Frequency: ${frequency} MHz<br>
+        Net ID: ${netID}<br>
+        ${fhDetails}
+        Status: <span style="color:lime;">READY</span>
+      `;
     }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+    // Ensure FH fields reflect mode on load
+    window.onload = toggleFHFields;
   </script>
 </body>
 </html>
