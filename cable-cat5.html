@@ -15,6 +15,14 @@
       color: #0f0;
     }
 
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 80vh;
+    }
+
     .builder {
       display: flex;
       gap: 40px;
@@ -72,40 +80,57 @@
     .button:hover {
       background-color: #0056b3;
     }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 15px;
+      background-color: #4caf50;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .back-btn:hover {
+      background-color: #3e8e41;
+    }
   </style>
 </head>
 <body>
-  <h1>🔌 Interactive Cable Builder</h1>
+  <div class="center-container">
+    <h1>🔌 Interactive Cable Builder</h1>
 
-  <div class="builder">
-    <div class="cable" id="endA">
-      <h3>End A</h3>
-      <div class="slot"><label>Pin 1:</label><select></select></div>
-      <div class="slot"><label>Pin 2:</label><select></select></div>
-      <div class="slot"><label>Pin 3:</label><select></select></div>
-      <div class="slot"><label>Pin 4:</label><select></select></div>
-      <div class="slot"><label>Pin 5:</label><select></select></div>
-      <div class="slot"><label>Pin 6:</label><select></select></div>
-      <div class="slot"><label>Pin 7:</label><select></select></div>
-      <div class="slot"><label>Pin 8:</label><select></select></div>
+    <div class="builder">
+      <div class="cable" id="endA">
+        <h3>End A</h3>
+        <div class="slot"><label>Pin 1:</label><select></select></div>
+        <div class="slot"><label>Pin 2:</label><select></select></div>
+        <div class="slot"><label>Pin 3:</label><select></select></div>
+        <div class="slot"><label>Pin 4:</label><select></select></div>
+        <div class="slot"><label>Pin 5:</label><select></select></div>
+        <div class="slot"><label>Pin 6:</label><select></select></div>
+        <div class="slot"><label>Pin 7:</label><select></select></div>
+        <div class="slot"><label>Pin 8:</label><select></select></div>
+      </div>
+
+      <div class="cable" id="endB">
+        <h3>End B</h3>
+        <div class="slot"><label>Pin 1:</label><select></select></div>
+        <div class="slot"><label>Pin 2:</label><select></select></div>
+        <div class="slot"><label>Pin 3:</label><select></select></div>
+        <div class="slot"><label>Pin 4:</label><select></select></div>
+        <div class="slot"><label>Pin 5:</label><select></select></div>
+        <div class="slot"><label>Pin 6:</label><select></select></div>
+        <div class="slot"><label>Pin 7:</label><select></select></div>
+        <div class="slot"><label>Pin 8:</label><select></select></div>
+      </div>
     </div>
 
-    <div class="cable" id="endB">
-      <h3>End B</h3>
-      <div class="slot"><label>Pin 1:</label><select></select></div>
-      <div class="slot"><label>Pin 2:</label><select></select></div>
-      <div class="slot"><label>Pin 3:</label><select></select></div>
-      <div class="slot"><label>Pin 4:</label><select></select></div>
-      <div class="slot"><label>Pin 5:</label><select></select></div>
-      <div class="slot"><label>Pin 6:</label><select></select></div>
-      <div class="slot"><label>Pin 7:</label><select></select></div>
-      <div class="slot"><label>Pin 8:</label><select></select></div>
-    </div>
+    <button class="button" onclick="checkCable()">🧪 Check Cable</button>
+    <div class="feedback" id="resultText"></div>
+
+    <a href="index.html" class="back-btn">⬅ Back</a>
   </div>
-
-  <button class="button" onclick="checkCable()">🧪 Check Cable</button>
-
-  <div class="feedback" id="resultText"></div>
 
   <script>
     const colors = [
@@ -153,16 +178,6 @@
 
     populateSelects("endA");
     populateSelects("endB");
-
-      <a href="index.html"
-       style="display: inline-block;
-              margin-top: 20px;
-              padding: 10px 15px;
-              background-color: #4caf50;
-              color: #fff;
-              text-decoration: none;
-              border-radius: 5px;">
-       ⬅ Back
   </script>
 </body>
 </html>
