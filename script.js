@@ -24,15 +24,16 @@ function showTab(tabId, event) {
 // IPv4 SUBNET CALCULATOR
 // ==============================
 function calculateSubnet() {
-  const input = document.getElementById('ipInput').value.trim();
-  const output = document.getElementById('ipOutput');
+  const input = document.getElementById("ipInput")?.value.trim();
+  const output = document.getElementById("ipOutput");
+  if (!input || !output) return;
 
-  const [ip, cidr] = input.split('/');
-  const ipParts = ip.split('.').map(Number);
+  const [ip, cidr] = input.split("/");
+  const ipParts = ip.split(".").map(Number);
   const maskBits = parseInt(cidr);
 
   if (ipParts.length !== 4 || isNaN(maskBits) || maskBits < 0 || maskBits > 32) {
-    output.textContent = 'Invalid IP/CIDR format. Example: 192.168.1.0/24';
+    output.textContent = "Invalid IP/CIDR format. Example: 192.168.1.0/24";
     return;
   }
 
@@ -48,15 +49,11 @@ function calculateSubnet() {
   const network = ipDecimal & subnetMask;
   const broadcast = network | (~subnetMask >>> 0);
 
-  const toIP = (int) => [
-    (int >>> 24) & 255,
-    (int >>> 16) & 255,
-    (int >>> 8) & 255,
-    int & 255,
-  ].join('.');
+  const toIP = (int) =>
+    [(int >>> 24) & 255, (int >>> 16) & 255, (int >>> 8) & 255, int & 255].join(".");
 
   output.textContent = `
-Subnet Mask: ${maskParts.join('.')}
+Subnet Mask: ${maskParts.join(".")}
 Network Address: ${toIP(network)}
 Broadcast Address: ${toIP(broadcast)}
 Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
@@ -67,32 +64,33 @@ Usable Range: ${toIP(network + 1)} – ${toIP(broadcast - 1)}
 // NSN FUNCTIONS
 // ==============================
 function loadNSNs() {
-  fetch('nsn-data.json')
-    .then(res => res.json())
-    .then(data => {
-      nsnData = data.filter(entry =>
-        typeof entry.nsn === 'string' &&
-        entry.item &&
-        entry.item.toLowerCase() !== '30level' &&
-        entry.item.toLowerCase() !== 'nomenclature' &&
-        entry.nsn.toUpperCase() !== 'NSN'
+  if (!document.getElementById("nsnList")) return;
+  fetch("nsn-data.json")
+    .then((res) => res.json())
+    .then((data) => {
+      nsnData = data.filter(
+        (entry) =>
+          typeof entry.nsn === "string" &&
+          entry.item &&
+          !["30level", "nomenclature"].includes(entry.item.toLowerCase()) &&
+          entry.nsn.toUpperCase() !== "NSN"
       );
       filteredData = nsnData;
       displayNSNs(filteredData);
     })
-    .catch(err => {
-      document.getElementById('nsnList').innerHTML = 'Error loading NSN data.';
+    .catch((err) => {
+      document.getElementById("nsnList").innerHTML = "Error loading NSN data.";
       console.error(err);
     });
 }
 
 function displayNSNs(data) {
-  const listContainer = document.getElementById('nsnList');
+  const listContainer = document.getElementById("nsnList");
   if (!listContainer) return;
-  listContainer.innerHTML = '';
-  data.forEach(entry => {
-    const div = document.createElement('div');
-    div.className = 'nsn-item';
+  listContainer.innerHTML = "";
+  data.forEach((entry) => {
+    const div = document.createElement("div");
+    div.className = "nsn-item";
     div.innerHTML = `
       <div class="item-name"><strong>${entry.item}</strong></div>
       <div class="item-nsn"><code>${entry.nsn}</code></div>
@@ -103,10 +101,11 @@ function displayNSNs(data) {
 }
 
 function filterNSNs() {
-  const query = document.getElementById('nsnSearch').value.toLowerCase();
-  filteredData = nsnData.filter(entry =>
-    entry.item.toLowerCase().includes(query) ||
-    entry.nsn.toLowerCase().includes(query)
+  const query = document.getElementById("nsnSearch")?.value.toLowerCase() || "";
+  filteredData = nsnData.filter(
+    (entry) =>
+      entry.item.toLowerCase().includes(query) ||
+      entry.nsn.toLowerCase().includes(query)
   );
   displayNSNs(filteredData);
 }
@@ -118,18 +117,18 @@ function copyToClipboard(text) {
 }
 
 function downloadCSV() {
-  const csvRows = ['Item,NSN'];
-  filteredData.forEach(entry => {
+  const csvRows = ["Item,NSN"];
+  filteredData.forEach((entry) => {
     const row = `"${entry.item.replace(/"/g, '""')}","${entry.nsn}"`;
     csvRows.push(row);
   });
 
-  const csvContent = csvRows.join('\n');
-  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const csvContent = csvRows.join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = url;
-  a.download = 'nsn-export.csv';
+  a.download = "nsn-export.csv";
   a.click();
 }
 
@@ -140,6 +139,7 @@ function setupCompass() {
   const needle = document.getElementById("needle");
   const degreeDisplay = document.getElementById("degreeDisplay");
   const startBtn = document.getElementById("startBtn");
+  if (!needle || !degreeDisplay || !startBtn) return;
 
   function rotateNeedle(deg) {
     needle.style.transform = `rotate(${deg}deg)`;
@@ -169,16 +169,14 @@ function setupCompass() {
     }
   }
 
-  if (startBtn) {
-    startBtn.addEventListener("click", startCompass);
-  }
+  startBtn.addEventListener("click", startCompass);
 }
 
 // ==============================
 // ZULU CLOCK
 // ==============================
 function setupZuluClock() {
-  const display = document.getElementById("time-display");
+  const display = document.getElementById("time-display-zulu");
   if (!display) return;
 
   function updateTime() {
@@ -192,6 +190,7 @@ function setupZuluClock() {
   updateTime();
   setInterval(updateTime, 1000);
 }
+
 // ==============================
 // SWITCH & ROUTER SIMULATION
 // ==============================
@@ -203,6 +202,7 @@ function runSimulation() {
   const subnet = document.getElementById("subnet")?.value || "";
   const gateway = document.getElementById("gateway")?.value || "";
   const resultBox = document.getElementById("result");
+  if (!resultBox) return;
 
   let result = `Switch(config)# interface ${port}\n`;
   result += `Switch(config-if)# switchport mode ${mode}\n`;
@@ -219,7 +219,6 @@ function runSimulation() {
   result += `Subnet Mask: ${subnet}\n`;
   result += `Default Gateway: ${gateway}\n`;
 
-  // Simple validation
   if (
     !validateIP(ip) ||
     !validateIP(subnet) ||
@@ -233,19 +232,25 @@ function runSimulation() {
     result += `\n✅ Configuration looks valid.`;
   }
 
-  if (resultBox) resultBox.textContent = result;
+  resultBox.textContent = result;
 }
 
 function validateIP(ip) {
-  return /^(\d{1,3}\.){3}\d{1,3}$/.test(ip);
+  const parts = ip.split(".");
+  return (
+    parts.length === 4 &&
+    parts.every((p) => {
+      const n = Number(p);
+      return !isNaN(n) && n >= 0 && n <= 255;
+    })
+  );
 }
-
 
 // ==============================
 // DOM READY
 // ==============================
-document.addEventListener('DOMContentLoaded', () => {
-  loadNSNs();
-  setupCompass();
-  setupZuluClock();
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("nsnList")) loadNSNs();
+  if (document.getElementById("needle")) setupCompass();
+  if (document.getElementById("time-display-zulu")) setupZuluClock();
 });
