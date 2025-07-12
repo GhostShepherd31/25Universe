@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Cisco CLI Simulator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { font-family: monospace; background: #111; color: #0f0; padding: 20px; }
+    .cli-box { background: #000; padding: 20px; border-radius: 8px; min-height: 300px; max-width: 800px; margin: auto; }
+    .output { white-space: pre-wrap; margin-bottom: 10px; min-height: 200px; }
+    input[type="text"] {
+      width: 100%;
+      background: #111;
+      color: #0f0;
+      border: none;
+      border-bottom: 1px solid #0f0;
+      padding: 8px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Basic Cisco CLI Simulator</h1>
+  <div class="cli-box">
+    <div id="cliOutput" class="output"></div>
+    <input id="cliInput" type="text" placeholder="Enter command..." autofocus />
+  </div>
+
+  <script>
+    const cliOutput = document.getElementById("cliOutput");
+    const cliInput = document.getElementById("cliInput");
+    let mode = "user"; // modes: user, enable, config
+
+    const responses = {
+      "ping 8.8.8.8": "Sending 5, 100-byte ICMP Echos to 8.8.8.8:\n!!!!!\nSuccess rate is 100%",
+      "show ip interface brief": `Interface       IP-Address      OK? Method Status                Protocol
+Gig0/0          192.168.1.1     YES manual up                    up
+Gig0/1          unassigned      YES unset  administratively down down`,
+      "configure terminal": () => { mode = "config"; return "Enter configuration commands, one per line." },
+      "interface gig0/1": () => mode === "config" ? "Now configuring interface Gig0/1" : "% Invalid command in current mode",
+      "ip address 192.168.1.2 255.255.255.0": () => mode === "config" ? "IP address assigned." : "% Invalid mode",
+      "no shutdown": () => mode === "config" ? "Interface brought up." : "% Invalid mode",
+      "exit": () => {
+        if (mode === "config") {
+          mode = "enable"; return "Exited configuration mode.";
+        } else if (mode === "enable") {
+          mode = "user"; return "Exited enable mode.";
+        }
+        return "Already at user mode.";
+      },
+      "enable": () => { mode = "enable"; return "Entered enable mode."; },
+      "?": "Supported commands: ping, show ip interface brief, enable, configure terminal, interface, ip address, no shutdown, exit"
+    };
+
+    cliInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const cmd = cliInput.value.trim().toLowerCase();
+        cliOutput.innerText += `\n> ${cmd}`;
+        const response = typeof responses[cmd] === "function" ? responses[cmd]() : responses[cmd] || "% Unrecognized command";
+        cliOutput.innerText += `\n${response}`;
+        cliOutput.scrollTop = cliOutput.scrollHeight;
+        cliInput.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
