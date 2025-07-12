@@ -263,3 +263,23 @@ pre {
   width: fit-content;
 }
 
+.command-reference {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #111;
+  color: #0f0;
+  border: 1px solid #0f0;
+  border-radius: 10px;
+  font-family: monospace;
+}
+.command-reference h3, .command-reference h4 {
+  margin-top: 10px;
+}
+.command-reference ul {
+  margin: 5px 0 15px 20px;
+}
+.command-reference code {
+  background-color: #222;
+  padding: 2px 4px;
+  border-radius: 5px;
+}
