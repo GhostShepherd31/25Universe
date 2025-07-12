@@ -6,22 +6,30 @@
   <title>25Universe – Signal Toolkit</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
+    /* Zulu clock styling */
     #time-display {
-      margin-top: 20px;
-      background-color: rgba(0, 0, 0, 0.7);
+      margin: 10px auto 20px auto;
+      background-color: rgba(0, 0, 0, 0.8);
       color: #0f0;
-      padding: 15px 25px;
-      font-size: 1.5rem;
+      padding: 12px 25px;
+      font-size: 1.2rem;
       font-family: monospace;
       text-align: center;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+      width: fit-content;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>25Universe – Signal Toolkit</h1>
+
+    <!-- ✅ Always-visible Zulu Clock -->
+    <div id="time-display">
+      Local Time: --:--:--<br>
+      Zulu Time: --:--:--Z
+    </div>
 
     <!-- Main Tab Navigation -->
     <nav class="tabs">
@@ -58,13 +66,6 @@
       <div class="link-list">
         <a href="compass.html">Compass</a>
         <a href="gps.html">GPS</a>  
-      </div>
-
-      <!-- ✅ Zulu Clock added here -->
-      <h3 style="margin-top: 30px;">Zulu Time Display</h3>
-      <div id="time-display">
-        Local Time: --:--:--<br>
-        Zulu Time: --:--:--Z
       </div>
     </section>
 
